@@ -1,22 +1,39 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-int main
+int main ()
 {
-	pid_t child1 = fork();
-	char *args[] = {"/bin/ls", "-l", "/tmp"};
+	int i;
+	pid_t childn, parent;
+	char *args[] = {"/bin/ls", "-l", "/tmp/", NULL};
 
-	if (child1 == 0)
+	for (i = 0; i < 5; i++)
 	{
-		if (execve(args[0], args, NULL) == -1)
+		childn = fork();
+		if (childn == -1)
 		{
 			perror("Error");
 			return (1);
 		}
+		if (childn == 0)
+		{
+			if (execve(args[0], args, NULL) == -1)
+			{
+				perror("Error");
+				return (1);
+			}
+		}
+		else
+		{
+			wait(NULL);
+			printf("then of number %d \n", (i + 1));
+		}
+		parent = getppid();
+		childn = getpid();
+		printf("Id parent %d\n", parent);
+		printf("Id child %d\n", childn);
 	}
-	else
-	{
-		wait(NULL);
-	}
+	return (0);
 }
