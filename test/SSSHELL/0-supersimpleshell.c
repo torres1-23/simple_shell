@@ -15,8 +15,8 @@ int main(void)
 		execute(arr);
 		while (arr[i]) 
 		{
-		free(arr[i]);
-		i++;
+			free(arr[i]);
+			i++;
 		}
 		free(arr);
 		free (buffer);
