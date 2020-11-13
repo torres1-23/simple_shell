@@ -13,14 +13,14 @@ int main(void)
 		buffer[numc - 1] = '\0';
 		arr = call_strtok(buffer);
 		execute(arr);
-		write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
-	}
-	while (arr[i]) 
-	{
+		while (arr[i]) 
+		{
 		free(arr[i]);
 		i++;
+		}
+		free(arr);
+		free (buffer);
+		write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
 	}
-	free(arr);
-	free (buffer);
 	return (0);
 }
