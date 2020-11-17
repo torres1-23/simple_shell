@@ -20,12 +20,3 @@ char *_getenv(const char *name)
 	free(tmp);
 	return(tmp2[1]);
 }
-int main ()
-{
-	char *v = "NAME";
-
-	printf("Variable name : %s\n", v);
-        printf ("using our own _getenv : %s\n", _getenv(v));
-        printf("Using the real getenv : %s\n", getenv(v));
-        return(0);
-}
