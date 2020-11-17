@@ -1,29 +1,31 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "header.h"
 
 char *_getenv(const char *name)
 {
 	extern char **environ;
 	int i = 0, j = 0;
+	char *tmp, **tmp2;
 
 	while(environ[i] != NULL)
 	{
-		i++;
 	        if (environ[i][j] == name[j])
 		{
-			printf("Variable name: %s\n", name);
-			printf("Using our own _getenv %s\n", environ[i]);
+			tmp = _strdup(environ[i]);
+			tmp2 = call_strtok(tmp, "=");
 			j++;
 			break;
 		}
+		i++;
 	}
-	return(environ[i]);
+	free(tmp);
+	return(tmp2[1]);
 }
 int main ()
 {
 	char *v = "NAME";
 
-        _getenv(v);
+	printf("Variable name : %s\n", v);
+        printf ("using our own _getenv : %s\n", _getenv(v));
         printf("Using the real getenv : %s\n", getenv(v));
         return(0);
 }
