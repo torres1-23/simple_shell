@@ -8,7 +8,6 @@ int _getposition(const char *name)
 	{
 		while (environ[i][len] != '=')
 			len++;
-		len = len - 1;
 		len1 = len;
 		while (len > 0)
 		{
