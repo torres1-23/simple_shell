@@ -4,7 +4,6 @@ int main (int ac, char **av, char **env)
 {
 	extern char **environ;
 	int i = 0;
-
 	(void) ac;
 	(void) av;
 
