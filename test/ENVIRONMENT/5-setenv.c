@@ -2,54 +2,51 @@
 
 int _setenv(const char *name, const char *value, int overwrite)
 {
-	int index, j = 0, i = 0, k, l = 0;
+	int index, i, j = 0, k, len = 0, len1 = 0, len2 = 0;
+	char ** tmp;
 
+	while (name[len])
+		len++;
+	while (value[len1])
+		len1++;
 	if (_getposition(name) >= 0 && overwrite == 0)
 		return (0);
-
-	if ((index = _getposition(name)) >= 0 && overwrite != 0)
+	else if ((index = _getposition(name)) >= 0 && overwrite != 0)
 	{
-		for (j = 0; environ[index][j] != '\0'; j++)
-			environ[index][j] = '\0';
-
-		for (j = 0; name[j] != '\0'; j++)
-			;
-
-		for (i = 0; i < j; i++)
-			environ[index][i] = name[i];
-
+		for (i = 0; environ[index][i] != '\0'; i++)
+			environ[index][i] = '\0';
+		environ[index] = malloc(sizeof(char) * (len + len1 + 1));
+		for (i = 0; i < len; i++)
+			environ[index][i] =  name[i];
 		environ[index][i++] = '=';
-
-		for (j = 0; value[j] != '\0'; j++)
-			;
-
-		for (k = 0; k < j; k++)
-			environ[index][i++] = value[k];
-
+		for (j = 0; j < len1; j++)
+			environ[index][i++] = value[j];
 		environ[index][i] = '\0';
 	}
-
-	if (_getposition(name) < 0)
+	else
 	{
-		while (environ[l])
-			l++;
-		printf("position : %d", l);
-
-                for (j = 0; name[j] != '\0'; j++)
-                        ;
-
-                for (i = 0; i < j; i++)
-                        environ[l][i] = name[i];
-
-                environ[l][i++] = '=';
-
-                for (j = 0; value[j] != '\0'; j++)
-                        ;
-
-                for (k = 0; k < j; k++)
-                        environ[l][i++] = value[k];
-
-                environ[l][i] = '\0';
+		while (environ[len2])
+			len2++;
+		tmp = malloc(sizeof(char *) * (len2 + 1));
+		for (i = 0; i < len2; i++)
+			tmp[i] = _strdup(environ[i]);
+		tmp[i] = '\0';
+		environ = malloc(sizeof(char *) * (len2 + 2));
+		for (i = 0; i < len2; i++)
+			environ[i] = _strdup(tmp[i]);
+		while (tmp[j])
+		{
+			free(tmp[j]);
+			j++;
+		}
+		free(tmp);
+		environ[i] = malloc(sizeof(char) * (len + len1 + 1));
+                for (j = 0; j < len; j++)
+                        environ[i][j] = name[j];
+                environ[i][j++] = '=';
+                for (k = 0; k < len1; k++)
+                        environ[i][j++] = value[k];
+                environ[i][j] = '\0';
 	}
 	return(0);
 }
