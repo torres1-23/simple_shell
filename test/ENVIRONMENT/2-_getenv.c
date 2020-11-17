@@ -3,7 +3,7 @@
 char *_getenv(const char *name)
 {
 	int i = 0, j = 0, len = 0, len1 = 0;
-	char *tmp, **tmp2, *ret;
+	char *tmp, **tmp2, *ret = NULL;
 
 	while (environ)
 	{
@@ -39,5 +39,7 @@ char *_getenv(const char *name)
 	}
 	free(tmp2);
 	free(tmp);
+	if (ret == NULL)
+		return (NULL);
 	return (ret);
 }

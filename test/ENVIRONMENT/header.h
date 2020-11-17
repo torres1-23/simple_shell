@@ -19,5 +19,7 @@ char **call_strtok(char *str, char *delimitx);
 void print_path(char *name);
 listdir *listenv(const char *variable);
 listdir *add_node_end(listdir **head, const char *str);
+int _setenv(const char *name, const char *value, int overwrite);
+int _getposition(const char *name);
 
 #endif
