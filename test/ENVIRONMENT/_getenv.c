@@ -13,7 +13,8 @@ char *_getenv(const char *name)
 			tmp = _strdup(environ[i]);
 			tmp2 = call_strtok(tmp, "=");
 			j++;
-			break;
+			if (environ[i][j + 1] == '=')
+				break;
 		}
 		i++;
 	}
