@@ -7,7 +7,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <stdlib.h>
-
+extern char **environ;
 char *_strdup(char *str);
 char *_getenv(const char *name);
 char **call_strtok(char *str, char *delimitx);
