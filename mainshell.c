@@ -6,7 +6,7 @@
  */
 int main(void)
 {
-	char *buffer = NULL, **arr, *comand = NULL, *space = " ";
+	char *buffer = NULL, **arr = NULL, *comand = NULL, *space = " ";
 	size_t buffersize = 0;
 	ssize_t numc = 0;
 	int i = 0, j = 0;
@@ -16,18 +16,17 @@ int main(void)
 	{
 		i = 0;
 		j = 0;
-		comand = malloc(sizeof(char) * (numc + 1));
+		comand = malloc(sizeof(char) * numc);
 		buffer[numc - 1] = '\0';
-		while(buffer[i])
+		while (buffer[i])
 		{
-			if(buffer[i] != space[0])
+			if (buffer[i] != space[0])
 				break;
-			i++;	
+			i++;
 		}
-		for(j = 0; j <= numc; j++)	
+		for (j = 0; j < numc; j++)
 			comand[j] = buffer[i++];
-		comand[j] = '\0';
-		if(numc != 1 && comand[0])
+		if (numc != 1 && comand[0])
 		{
 			arr = call_strtok(comand, " ");
 			execute(arr);
@@ -42,6 +41,6 @@ int main(void)
 		write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
 		free(comand);
 	}
-	free (buffer);
+	free(buffer);
 	return (0);
 }

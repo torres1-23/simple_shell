@@ -65,7 +65,6 @@ void execute(char **args)
 {
 	int status, i = 0;
 	pid_t childn;
-	/* char *args[] = {"/bin/ls", "-l", "/tmp/", NULL}; */
 
 	childn = fork();
 	if (childn == -1)
@@ -77,10 +76,10 @@ void execute(char **args)
 	{
 		if (execve(args[0], args, NULL) == -1)
 		{
-			while(args[0][i])
+			while (args[0][i])
 				i++;
-			write(1, args[0], i),
-			write(1, ": ", 2),
+			write(STDOUT_FILENO, args[0], i);
+			write(STDOUT_FILENO, ": ", 3);
 			perror("");
 			return;
 		}
