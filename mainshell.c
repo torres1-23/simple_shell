@@ -37,9 +37,8 @@ int main(void)
 			}
 			free(arr);
 		}
-		free(comand);
-		buffer = NULL;
 		write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
+		free(comand);
 	}
 	free (buffer);
 	return (0);
