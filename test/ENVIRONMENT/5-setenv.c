@@ -15,7 +15,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 	{
 		for (i = 0; environ[index][i] != '\0'; i++)
 			environ[index][i] = '\0';
-		environ[index] = malloc(sizeof(char) * (len + len1 + 1));
+		environ[index] = malloc(sizeof(char) * (len + len1 + 2));
 		for (i = 0; i < len; i++)
 			environ[index][i] =  name[i];
 		environ[index][i++] = '=';
@@ -40,7 +40,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 			j++;
 		}
 		free(tmp);
-		environ[i] = malloc(sizeof(char) * (len + len1 + 1));
+		environ[i] = malloc(sizeof(char) * (len + len1 + 2));
                 for (j = 0; j < len; j++)
                         environ[i][j] = name[j];
                 environ[i][j++] = '=';

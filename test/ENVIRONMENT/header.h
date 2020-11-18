@@ -21,5 +21,6 @@ listdir *listenv(const char *variable);
 listdir *add_node_end(listdir **head, const char *str);
 int _setenv(const char *name, const char *value, int overwrite);
 int _getposition(const char *name);
+int _unsetenv(const char *name);
 
 #endif
