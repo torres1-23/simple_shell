@@ -65,6 +65,7 @@ void execute(char **args)
 {
 	int status, i = 0;
 	pid_t childn;
+	char *path;
 
 	childn = fork();
 	if (childn == -1)
@@ -76,14 +77,81 @@ void execute(char **args)
 	{
 		if (execve(args[0], args, NULL) == -1)
 		{
-			while (args[0][i])
-				i++;
-			write(STDOUT_FILENO, args[0], i);
-			write(STDOUT_FILENO, ": ", 3);
-			perror("");
-			return;
+			if ((path = find_path(args[0])))
+			{
+				args[0] = _strdup(path);
+				execve(args[0], args, NULL);
+			}
+			else
+			{
+				while (args[0][i])
+					i++;
+				write(STDOUT_FILENO, args[0], i);
+				write(STDOUT_FILENO, ": ", 3);
+				perror("");
+				return;
+			}
 		}
 	}
 	else
 		wait(&status);
+}
+/**
+ * find_path - function that find the route of the identifier.
+ * @exname: name of executable.
+ * Return: pointer to the route.
+ */
+char *find_path(char *exname)
+{
+	char *name = "PATH", *route;
+	char *getenvp, **directory;
+	int i = 0;
+	struct stat dir_stat;
+
+	getenvp = _getenv(name);
+	directory = call_strtok(getenvp, ":");
+	for (i = 0; directory[i]; i++)
+	{
+		route = str_concat(directory[i], exname);
+		if (stat(route, &dir_stat) == 0)
+		{
+			return(route);
+		}
+	}
+	return(NULL);
+}
+/**
+ * str_concat - function that concatenate two strings
+ * @s1: first string
+ * @s2: second string.
+ * Return: pointer to the string concatenated.
+ */
+char *str_concat(char *s1, char *s2)
+{
+	int i = 0, j = 0, k, l;
+	char *con;
+
+	if (s1 == NULL)
+	{
+		s1 = "";
+	}
+	if (s2 == NULL)
+	{
+		s2 = "";
+	}
+	while (s1[i] != '\0')
+		i++;
+	while (s2[j] != '\0')
+		j++;
+	con = malloc(sizeof(char) * (i + j + 2));
+	if (con == 0)
+		return (0);
+	for (k = 0; k < i; k++)
+		con[k] = s1[k];
+	con[k++] = '/';
+	for (l = 0; l < j; l++)
+		con[k++] = s2[l];
+
+	con[k] = '\0';
+	return (con);
 }

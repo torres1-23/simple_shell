@@ -7,7 +7,7 @@ int main()
 	print_path(case1);
 	return (0);
 }
-void print_path(char *exname)
+char *print_path(char *exname)
 {
 	char *name = "PATH", *route;
 	char *getenvp, **directory;
@@ -20,8 +20,11 @@ void print_path(char *exname)
 	{
 		route = str_concat(directory[i], exname);
 		if (stat(route, &dir_stat) == 0)
-			printf("Ruta : %s\n", route);
+		{
+			return(route);
+		}
 	}
+	return(NULL);
 }
 char *str_concat(char *s1, char *s2)
 {
