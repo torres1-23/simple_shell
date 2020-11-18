@@ -21,9 +21,11 @@ int main(void)
 		while(buffer[i])
 		{
 			if(buffer[i] != space[0])
-				comand[j++] = buffer[i];
-			i++;
+				break;
+			i++;	
 		}
+		for(j = 0; j <= numc; j++)	
+			comand[j] = buffer[i++];
 		comand[j] = '\0';
 		if(numc != 1 && comand[0])
 		{
