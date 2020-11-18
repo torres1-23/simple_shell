@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <string.h>
 #include <stdlib.h>
@@ -23,5 +24,7 @@ int _setenv(const char *name, const char *value, int overwrite);
 int _getposition(const char *name);
 int _unsetenv(const char *name);
 char *concat (const char *name, const char *value, int index);
+void print_path(char *exname);
+char *str_concat(char *s1, char *s2);
 
 #endif
