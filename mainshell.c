@@ -25,7 +25,7 @@ int main(void)
 			i++;
 		}
 		comand[j] = '\0';
-		if(numc != 1 && comand)
+		if(numc != 1 && comand[0])
 		{
 			arr = call_strtok(comand, " ");
 			execute(arr);
@@ -38,8 +38,9 @@ int main(void)
 			free(arr);
 		}
 		free(comand);
-		free(buffer);
+		buffer = NULL;
 		write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
 	}
+	free (buffer);
 	return (0);
 }
