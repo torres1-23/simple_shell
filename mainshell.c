@@ -10,12 +10,13 @@ int main(void)
 	size_t buffersize = 0;
 	ssize_t numc = 0;
 	int i = 0, j = 0;
+
 	write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
 	while ((numc = getline(&buffer, &buffersize, stdin)) != -1)
 	{
 		i = 0;
 		j = 0;
-		comand = malloc(sizeof(char) * numc + 1);
+		comand = malloc(sizeof(char) * (numc + 1));
 		buffer[numc - 1] = '\0';
 		while(buffer[i])
 		{
@@ -24,11 +25,7 @@ int main(void)
 			i++;
 		}
 		comand[j] = '\0';
-		printf("direccion %p\n", buffer);
-		printf("direccion %p\n", comand);
-		printf("direccion %s\n", buffer);
-		printf("direccion %s\n", comand);
-		if(numc != 1)
+		if(numc != 1 && comand)
 		{
 			arr = call_strtok(comand, " ");
 			execute(arr);
