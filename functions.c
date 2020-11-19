@@ -26,12 +26,14 @@ char *_strdup(char *str)
 	copy[i] = '\0';
 	return (copy);
 }
+
 /**
  * call_strtok - function that breaks string into tokens
  * @str: string to break
  * @delimit: delimiter
  * Return: pointer to the first token found in the string
  */
+
 char **call_strtok(char *str, char *delimit)
 {
 	char **arrword;
@@ -57,10 +59,12 @@ char **call_strtok(char *str, char *delimit)
 	free(tmp);
 	return (arrword);
 }
+
 /**
  * execute - function that execute the arguments received
  * @args: arguments
  */
+
 void execute(char **args)
 {
 	int status, i = 0;
@@ -71,16 +75,21 @@ void execute(char **args)
 	if (childn == -1)
 	{
 		perror("Error");
-		return;
+		while (args[i])
+			free(args[i++]);
+		free(args);
+		exit(EXIT_FAILURE);
 	}
 	if (childn == 0)
 	{
 		if (execve(args[0], args, NULL) == -1)
 		{
-			if ((path = find_path(args[0])))
+			path = find_path(args[0]);
+			if (path)
 			{
 				args[0] = _strdup(path);
 				execve(args[0], args, NULL);
+				exit(EXIT_SUCCESS);
 			}
 			else
 			{
@@ -89,18 +98,24 @@ void execute(char **args)
 				write(STDOUT_FILENO, args[0], i);
 				write(STDOUT_FILENO, ": ", 3);
 				perror("");
-				return;
+				i = 0;
+				while (args[i])
+					free(args[i++]);
+				free(args);
+				exit(EXIT_FAILURE);
 			}
 		}
 	}
 	else
 		wait(&status);
 }
+
 /**
  * find_path - function that find the route of the identifier.
  * @exname: name of executable.
  * Return: pointer to the route.
  */
+
 char *find_path(char *exname)
 {
 	char *name = "PATH", *route;
@@ -114,31 +129,33 @@ char *find_path(char *exname)
 	{
 		route = str_concat(directory[i], exname);
 		if (stat(route, &dir_stat) == 0)
-		{
-			return(route);
-		}
+			return (route);
+		free(route);
 	}
-	return(NULL);
+	i = 0;
+	while (directory[i])
+		free(directory[i++]);
+	free(directory);
+	free(getenvp);
+	return (NULL);
 }
+
 /**
  * str_concat - function that concatenate two strings
  * @s1: first string
  * @s2: second string.
  * Return: pointer to the string concatenated.
  */
+
 char *str_concat(char *s1, char *s2)
 {
 	int i = 0, j = 0, k, l;
 	char *con;
 
 	if (s1 == NULL)
-	{
 		s1 = "";
-	}
 	if (s2 == NULL)
-	{
 		s2 = "";
-	}
 	while (s1[i] != '\0')
 		i++;
 	while (s2[j] != '\0')
@@ -151,7 +168,6 @@ char *str_concat(char *s1, char *s2)
 	con[k++] = '/';
 	for (l = 0; l < j; l++)
 		con[k++] = s2[l];
-
 	con[k] = '\0';
 	return (con);
 }
