@@ -65,10 +65,13 @@ int _getposition(const char *name)
 	}
 	return (-1);
 }
-
+/**
+ * _cexit - Function that cause normal process termination
+ * @str: exit command with or without arguments
+ */
 void _cexit(char *str)
 {
-	int i = 5, j = 0, k = 0, digi;
+	int i = 0, j = 0, k = 0, l, digi;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
 	char num[255 * 4];
 	char *space = " ", *copy;
@@ -76,41 +79,52 @@ void _cexit(char *str)
 	copy = delspace(str, 5);
 	if (copy[i])
 	{
-		for (i = 5; str[i]; i++)
+		for (i = 0; copy[i]; i++)
 		{
-			if (str[i] == space[0])
-				continue;
-			else
+			j = 0;
+			while (dig[j])
 			{
-				while (dig[j])
+				if (copy[i] == dig[j])
 				{
-					if (str[i] == dig[j])
+					num[k++] = copy[i];
+					break;
+				}
+				j++;
+			}
+			if (copy[i] == space[0])
+			{
+				for (l = i; copy[l]; l++)
+				{
+					if (copy[l] != space[0] || !copy[l])
 					{
-						num[k++] = str[i];
-						break;
+						write(STDOUT_FILENO, "Too many arguments\n", 20);
+						return;
 					}
-					j++;
 				}
 			}
-			if (j == 12)
+			if (j == 10)
 			{
 				j = 0;
-				while (str[j++])
+				while (copy[j++])
 				;
-				write (STDOUT_FILENO, str, j);
+				write (STDOUT_FILENO, copy, j);
 				write(STDOUT_FILENO, ": ", 3);
 				write(STDOUT_FILENO, "Invalid argument\n", 18);
+				exit(2);
 			}
 		}
 		digi = _atoi(num);
-		if (digi >= 0 && digi <= 255)
-			printf("%d\n", digi);
-		else
-			printf("exit\n");
+		if (digi > 0 && digi <= 255)
+		{
+			write(STDOUT_FILENO, "exit\n", 7);
+			exit(digi);
+		}
 	}
 	else
-		printf("exit exitoso sin args\n");
-
+	{
+		write(STDOUT_FILENO, "exit\n", 6);
+		exit(0);
+	}
 }
 
 /**
@@ -160,7 +174,12 @@ int _atoi(char *s)
 		sum = -sum;
 	return (sum);
 }
-
+/**
+ * delspace - Function that deletas space before find a character 
+ * @str: string to remove the space
+ * @index: index to star to remove
+ * Return: return a pointer to the new string starting with a caracter o null
+ */
 char *delspace(char *str, int index)
 {
 	char *copy, *space = " ";
