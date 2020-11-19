@@ -65,7 +65,7 @@ char **call_strtok(char *str, char *delimit)
  * @args: arguments
  */
 
-void execute(char **args)
+void execute(char **args, char *c, char *b)
 {
 	int status, i = 0;
 	pid_t childn;
@@ -102,6 +102,8 @@ void execute(char **args)
 				while (args[i])
 					free(args[i++]);
 				free(args);
+				free(c);
+				free(b);
 				exit(EXIT_FAILURE);
 			}
 		}

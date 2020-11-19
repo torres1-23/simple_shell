@@ -12,7 +12,7 @@
 extern char **environ;
 char **call_strtok(char *str, char *delimit);
 char *_strdup(char *str);
-void execute(char **args);
+void execute(char **args, char *c, char *b);
 char *find_path(char *exname);
 char *str_concat(char *s1, char *s2);
 char *_getenv(const char *name);

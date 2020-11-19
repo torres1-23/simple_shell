@@ -29,7 +29,7 @@ int main(void)
 		if (numc != 1 && comand[0])
 		{
 			arr = call_strtok(comand, " ");
-			execute(arr);
+			execute(arr, comand, buffer);
 			i = 0;
 			while (arr[i])
 			{
