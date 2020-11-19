@@ -97,7 +97,7 @@ void execute(char **args, char *c, char *b)
 					i++;
 				write(STDOUT_FILENO, args[0], i);
 				write(STDOUT_FILENO, ": ", 3);
-				perror("");
+				write(STDOUT_FILENO, "Invalid command\n", 17);
 				i = 0;
 				while (args[i])
 					free(args[i++]);

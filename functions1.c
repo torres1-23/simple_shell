@@ -65,3 +65,117 @@ int _getposition(const char *name)
 	}
 	return (-1);
 }
+
+void _cexit(char *str)
+{
+	int i = 5, j = 0, k = 0, digi;
+	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
+	char num[255 * 4];
+	char *space = " ", *copy;
+
+	copy = delspace(str, 5);
+	if (copy[i])
+	{
+		for (i = 5; str[i]; i++)
+		{
+			if (str[i] == space[0])
+				continue;
+			else
+			{
+				while (dig[j])
+				{
+					if (str[i] == dig[j])
+					{
+						num[k++] = str[i];
+						break;
+					}
+					j++;
+				}
+			}
+			if (j == 12)
+			{
+				j = 0;
+				while (str[j++])
+				;
+				write (STDOUT_FILENO, str, j);
+				write(STDOUT_FILENO, ": ", 3);
+				write(STDOUT_FILENO, "Invalid argument\n", 18);
+			}
+		}
+		digi = _atoi(num);
+		if (digi >= 0 && digi <= 255)
+			printf("%d\n", digi);
+		else
+			printf("exit\n");
+	}
+	else
+		printf("exit exitoso sin args\n");
+
+}
+
+/**
+ * _atoi - convert a string to an integer.
+ * @s: string to convert
+ *
+ * Return: the string converted to int.
+ */
+
+int _atoi(char *s)
+{
+	unsigned int i = 0, length = 0, sign = 0, sum = 0;
+	unsigned int init, finish, d, num;
+
+	while (s[length] != '\0')
+		length++;
+	if (length == 0)
+		return (0);
+	for (i = 0; i < length; i++)
+	{
+		if (s[i] == '-')
+			sign++;
+		if (s[i] >= 48 && s[i] <= 57)
+		{
+			init = i;
+			break;
+		}
+	}
+	for (; i < length; i++)
+	{
+		if (s[i] < 48 || s[i] > 57)
+		{
+			break;
+		}
+	}
+	finish = i - 1;
+	for (; init <= finish; init++)
+	{
+		num = 1;
+		d = s[init] - '0';
+		for (i = 0; i < finish - init ; i++)
+			num = num * 10;
+		num = num * d;
+		sum = num + sum;
+	}
+	if (sign % 2 == 1)
+		sum = -sum;
+	return (sum);
+}
+
+char *delspace(char *str, int index)
+{
+	char *copy, *space = " ";
+	int i = index, j, len = 0;
+
+	while (str[len++])
+	;
+	copy = malloc(sizeof(char) * len + 1);
+	while (str[i])
+	{
+		if (str[i] != space[0])
+			break;
+		i++;
+	}
+	for (j = 0; j <= len; j++)
+		copy[j] = str[i++];
+	return (copy);
+}

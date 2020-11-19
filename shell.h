@@ -17,5 +17,8 @@ char *find_path(char *exname);
 char *str_concat(char *s1, char *s2);
 char *_getenv(const char *name);
 int _getposition(const char *name);
+void _cexit(char *str);
+int _atoi(char *s);
+char *delspace(char *str, int index);
 
 #endif /* _SHELL_H_ */
