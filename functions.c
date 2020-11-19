@@ -101,9 +101,7 @@ void execute(char **args, char *c, char *b)
 				i = 0;
 				while (args[i])
 					free(args[i++]);
-				free(args);
-				free(c);
-				free(b);
+				free(args),	free(c), free(b);
 				exit(EXIT_FAILURE);
 			}
 		}

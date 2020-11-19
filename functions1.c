@@ -73,8 +73,7 @@ void _cexit(char *str)
 {
 	int i = 0, j = 0, k = 0, l, digi;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-	char num[255 * 4];
-	char *space = " ", *copy;
+	char num[255 * 4], *space = " ", *copy;
 
 	copy = delspace(str, 5);
 	if (copy[i])
@@ -103,30 +102,15 @@ void _cexit(char *str)
 				}
 			}
 			if (j == 10)
-			{
-				j = 0;
-				while (copy[j++])
-				;
-				write (STDOUT_FILENO, copy, j);
-				write(STDOUT_FILENO, ": ", 3);
-				write(STDOUT_FILENO, "Invalid argument\n", 18);
-				exit(2);
-			}
+				message_exit(0, copy, digi);
 		}
 		digi = _atoi(num);
 		if (digi > 0 && digi <= 255)
-		{
-			write(STDOUT_FILENO, "exit\n", 7);
-			exit(digi);
-		}
+			message_exit(1, copy, digi);
 	}
 	else
-	{
-		write(STDOUT_FILENO, "exit\n", 6);
-		exit(0);
-	}
+		message_exit(2, copy, digi);
 }
-
 /**
  * _atoi - convert a string to an integer.
  * @s: string to convert
@@ -175,7 +159,7 @@ int _atoi(char *s)
 	return (sum);
 }
 /**
- * delspace - Function that deletas space before find a character 
+ * delspace - Function that deletas space before find a character
  * @str: string to remove the space
  * @index: index to star to remove
  * Return: return a pointer to the new string starting with a caracter o null

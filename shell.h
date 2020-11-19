@@ -20,5 +20,6 @@ int _getposition(const char *name);
 void _cexit(char *str);
 int _atoi(char *s);
 char *delspace(char *str, int index);
+void message_exit(int code, char *copy, int digi);
 
 #endif /* _SHELL_H_ */
