@@ -6,7 +6,8 @@
  */
 int main(void)
 {
-	char *buffer = NULL, **arr = NULL, *comand = NULL, *space = " ", *exit = "exit";
+	char *buffer = NULL, **arr = NULL, *comand = NULL;
+	char *space = " ", *exit = "exit";
 	size_t buffersize = 0;
 	ssize_t numc = 0;
 	int i = 0, j = 0;
@@ -22,7 +23,7 @@ int main(void)
 		while (comand[j] == exit[j])
 			j++;
 		if ((j == 5) || ((j == 4) && (comand[j] == space[0])))
-			_cexit(comand, buffer);	
+			_cexit(comand, buffer);
 		if (numc != 1 && comand[0])
 		{
 			arr = call_strtok(comand, " ");

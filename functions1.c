@@ -68,12 +68,13 @@ int _getposition(const char *name)
 /**
  * _cexit - Function that cause normal process termination
  * @str: exit command with or without arguments
+ * @buffer: buffer
  */
-void _cexit(char *str, char* buffer)
+void _cexit(char *str, char *buffer)
 {
 	int i = 0, j = 0, k = 0, l, digi = 0;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-	char num[255 * 4], *space = " ", *copy;
+	char num[255 * 4], *space = " ", *copy = NULL;
 
 	copy = delspace(str, 5);
 	if (copy[i])
@@ -97,9 +98,7 @@ void _cexit(char *str, char* buffer)
 					if (copy[l] != space[0] || !copy[l])
 					{
 						write(STDOUT_FILENO, "Too many arguments\n", 20);
-						free(str);
-						free(buffer);
-						free(copy);
+						free(str), free(buffer), free(copy);
 						return;
 					}
 				}
@@ -112,7 +111,7 @@ void _cexit(char *str, char* buffer)
 			message_exit(1, copy, digi, str, buffer);
 	}
 	else
-		message_exit(2, copy, digi, str ,buffer);
+		message_exit(2, copy, digi, str, buffer);
 }
 /**
  * _atoi - convert a string to an integer.
@@ -175,6 +174,8 @@ char *delspace(char *str, int index)
 	while (str[len++])
 	;
 	copy = malloc(sizeof(char) * len + 1);
+	if (copy == NULL)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] != space[0])

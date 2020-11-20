@@ -5,6 +5,8 @@
  * @code: code to switch the message
  * @copy: String
  * @digi: argument digit
+ * @str: string
+ * @buffer: buffer
  */
 void message_exit(int code, char *copy, int digi, char *str, char *buffer)
 {

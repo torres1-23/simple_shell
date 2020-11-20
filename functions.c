@@ -48,6 +48,8 @@ char **call_strtok(char *str, char *delimit)
 		word = strtok(NULL, delimit);
 	}
 	arrword = malloc(sizeof(char *) * (con + 1));
+	if (arrword == NULL)
+		return (NULL);
 	word = strtok(tmp, delimit);
 	while (word)
 	{
@@ -63,6 +65,8 @@ char **call_strtok(char *str, char *delimit)
 /**
  * execute - function that execute the arguments received
  * @args: arguments
+ * @b: buffer
+ * @c: command
  */
 
 void execute(char **args, char *c, char *b)
@@ -95,8 +99,7 @@ void execute(char **args, char *c, char *b)
 			{
 				while (args[0][i])
 					i++;
-				write(STDOUT_FILENO, args[0], i);
-				write(STDOUT_FILENO, ": ", 3);
+				write(STDOUT_FILENO, args[0], i), write(STDOUT_FILENO, ": ", 3);
 				write(STDOUT_FILENO, "Invalid command\n", 17);
 				i = 0;
 				while (args[i])
@@ -162,7 +165,7 @@ char *str_concat(char *s1, char *s2)
 		j++;
 	con = malloc(sizeof(char) * (i + j + 2));
 	if (con == 0)
-		return (0);
+		return (NULL);
 	for (k = 0; k < i; k++)
 		con[k] = s1[k];
 	con[k++] = '/';
