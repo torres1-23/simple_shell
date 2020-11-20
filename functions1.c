@@ -69,9 +69,9 @@ int _getposition(const char *name)
  * _cexit - Function that cause normal process termination
  * @str: exit command with or without arguments
  */
-void _cexit(char *str)
+void _cexit(char *str, char* buffer)
 {
-	int i = 0, j = 0, k = 0, l, digi;
+	int i = 0, j = 0, k = 0, l, digi = 0;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
 	char num[255 * 4], *space = " ", *copy;
 
@@ -97,19 +97,22 @@ void _cexit(char *str)
 					if (copy[l] != space[0] || !copy[l])
 					{
 						write(STDOUT_FILENO, "Too many arguments\n", 20);
+						free(str);
+						free(buffer);
+						free(copy);
 						return;
 					}
 				}
 			}
 			if (j == 10)
-				message_exit(0, copy, digi);
+				message_exit(0, copy, digi, str, buffer);
 		}
 		digi = _atoi(num);
 		if (digi > 0 && digi <= 255)
-			message_exit(1, copy, digi);
+			message_exit(1, copy, digi, str, buffer);
 	}
 	else
-		message_exit(2, copy, digi);
+		message_exit(2, copy, digi, str ,buffer);
 }
 /**
  * _atoi - convert a string to an integer.

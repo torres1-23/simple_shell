@@ -82,16 +82,16 @@ void execute(char **args, char *c, char *b)
 	}
 	if (childn == 0)
 	{
-		if (execve(args[0], args, NULL) == -1)
+		path = find_path(args[0]);
+		if (path)
 		{
-			path = find_path(args[0]);
-			if (path)
-			{
-				args[0] = _strdup(path);
-				execve(args[0], args, NULL);
-				exit(EXIT_SUCCESS);
-			}
-			else
+			args[0] = _strdup(path);
+			execve(args[0], args, NULL);
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+			if (execve(args[0], args, NULL) == -1)
 			{
 				while (args[0][i])
 					i++;
@@ -101,7 +101,7 @@ void execute(char **args, char *c, char *b)
 				i = 0;
 				while (args[i])
 					free(args[i++]);
-				free(args),	free(c), free(b);
+				free(args), free(c), free(b);
 				exit(EXIT_FAILURE);
 			}
 		}

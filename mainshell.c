@@ -22,7 +22,7 @@ int main(void)
 		while (comand[j] == exit[j])
 			j++;
 		if ((j == 5) || ((j == 4) && (comand[j] == space[0])))
-			_cexit(comand);	
+			_cexit(comand, buffer);	
 		if (numc != 1 && comand[0])
 		{
 			arr = call_strtok(comand, " ");
