@@ -21,5 +21,7 @@ void _cexit(char *str, char *buffer);
 int _atoi(char *s);
 char *delspace(char *str, int index);
 void message_exit(int code, char *copy, int digi, char *str, char *buffer);
+void built_in(char *str, char *buffer);
+void _cenv(void);
 
 #endif /* _SHELL_H_ */

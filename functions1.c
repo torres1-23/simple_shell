@@ -74,7 +74,7 @@ void _cexit(char *str, char *buffer)
 {
 	int i = 0, j = 0, k = 0, l, digi = 0;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-	char num[255 * 4], *space = " ", *copy = NULL;
+	char num[1020], *space = " ", *copy = NULL;
 
 	copy = delspace(str, 5);
 	if (copy[i])
@@ -161,28 +161,31 @@ int _atoi(char *s)
 	return (sum);
 }
 /**
- * delspace - Function that deletas space before find a character
+ * delspace - Function that deletes space before find a character
  * @str: string to remove the space
  * @index: index to star to remove
  * Return: return a pointer to the new string starting with a caracter o null
  */
 char *delspace(char *str, int index)
 {
-	char *copy, *space = " ";
+	char *copy = NULL, *space = " ";
 	int i = index, j, len = 0;
 
+	if (!str)
+		return(NULL);
 	while (str[len++])
 	;
-	copy = malloc(sizeof(char) * len + 1);
-	if (copy == NULL)
-		return (NULL);
 	while (str[i])
 	{
 		if (str[i] != space[0])
 			break;
 		i++;
 	}
-	for (j = 0; j <= len; j++)
+	copy = malloc(sizeof(char) * (len + 1));
+	if (copy == NULL)
+		return (NULL);
+	for (j = 0; j < len; j++)
 		copy[j] = str[i++];
+	copy[j] = '\0';
 	return (copy);
 }
