@@ -65,7 +65,7 @@ void built_in(char *str, char *buffer)
 			_cenv();
 			break;
 		}
-		if (i == 2)
+		else
 			break;
 		i++;
 	}
