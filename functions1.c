@@ -172,7 +172,7 @@ char *delspace(char *str, int index)
 	int i = index, j, len = 0;
 
 	if (!str)
-		return(NULL);
+		return (NULL);
 	while (str[len++])
 	;
 	while (str[i])
