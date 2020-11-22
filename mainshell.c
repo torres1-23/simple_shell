@@ -11,7 +11,7 @@ int main(void)
 	ssize_t numc = 0;
 	int i = 0, x = 1;
 
-	while(x == 1)
+	while (x == 1)
 	{
 		if (isatty(STDIN_FILENO) == 1)
 		{
@@ -19,10 +19,9 @@ int main(void)
 			x = 1;
 		}
 		if (isatty(STDIN_FILENO) == 0)
-		{
 			x = 0;
-		}	
-		if ((numc = getline(&buffer, &buffersize, stdin)) != -1)
+		numc = getline(&buffer, &buffersize, stdin);
+		if (numc != -1)
 		{
 			buffer[numc - 1] = '\0';
 			comand = delspace(buffer, 0);
@@ -39,9 +38,7 @@ int main(void)
 			free(comand);
 		}
 		else
-		{
 			break;
-		}
 	}
 	free(buffer);
 	return (0);
