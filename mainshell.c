@@ -9,18 +9,21 @@ int main(void)
 	char *buffer = NULL, **arr = NULL, *comand = NULL;
 	size_t buffersize = 0;
 	ssize_t numc = 0;
-	int i = 0, x = 1;
+	int i = 0;
 
-	if (isatty(STDIN_FILENO) == 1)
+	while(1)
 	{
-		write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
-		x = 1;
-	}
-	else 
-		x = 0;
-	
-	while ((numc = getline(&buffer, &buffersize, stdin)) != -1)
-	{
+		if (isatty(STDIN_FILENO) == 1)
+		{
+			write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
+		}
+		numc = getline(&buffer, &buffersize, stdin);
+		if (numc == EOF)
+		{
+			if (isatty(STDIN_FILENO) == 1)
+				write(STDOUT_FILENO, "\n", 2);
+			break;
+		}
 		buffer[numc - 1] = '\0';
 		comand = delspace(buffer, 0);
 		built_in(comand, buffer);
@@ -33,11 +36,6 @@ int main(void)
 				free(arr[i++]);
 			free(arr);
 		}
-		free(comand);
-		if (!x)
-			break;
-		else
-			write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
 	}
 	free(buffer);
 	return (0);
