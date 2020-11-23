@@ -86,13 +86,13 @@ void execute(char **args, char *c, char *b)
 	}
 	if (childn == 0)
 	{
-		path = find_path(args[0]);
 		if (args[0][0] == '/')
 		{
 			if (execve(args[0], args, NULL) == 1)
 				exit(EXIT_SUCCESS);
 		}
-		else if (path)
+		path = find_path(args[0]);
+		if (path)
 		{
 			args[0] = _strdup(path);
 			execve(args[0], args, NULL);
