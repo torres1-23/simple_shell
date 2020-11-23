@@ -91,7 +91,7 @@ void execute(char **args, char *c, char *b)
 		{
 			if (execve(args[0], args, NULL) == 1)
 				exit(EXIT_SUCCESS);
-		}		
+		}
 		else if (path)
 		{
 			args[0] = _strdup(path);
@@ -100,19 +100,13 @@ void execute(char **args, char *c, char *b)
 		}
 		else
 		{
-			if(execve(args[0], args, NULL) == -1)
-			{
-				while (args[0][i])
-					i++;
-				write(STDOUT_FILENO, args[0], i), write(STDOUT_FILENO, ": ", 3);
-				write(STDOUT_FILENO, "Invalid command\n", 17);
-				i = 0;
-				while (args[i])
-					free(args[i++]);
-				free(args), free(c), free(b);
-				exit(EXIT_FAILURE);
-			}
-		}	
+			while (args[0][i])
+				i++;
+			write(STDOUT_FILENO, args[0], i), write(STDOUT_FILENO, ": ", 3);
+			write(STDOUT_FILENO, "Invalid command\n", 17);
+			free_stuff(args, b, c);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 		wait(&status);

@@ -1,9 +1,11 @@
 #include "shell.h"
+
 /**
  * main - Entry point
  * Simple shell written by Alejandro and Alejandra
  * Return: 0 in success.
  */
+
 int main(void)
 {
 	char *buffer = NULL, **arr = NULL, *comand = NULL;
@@ -11,7 +13,7 @@ int main(void)
 	ssize_t numc = 0;
 	int i = 0;
 
-	while(1)
+	while (1)
 	{
 		if (isatty(STDIN_FILENO) == 1)
 		{

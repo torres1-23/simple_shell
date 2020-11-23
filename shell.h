@@ -23,5 +23,6 @@ char *delspace(char *str, int index);
 void message_exit(int code, char *copy, int digi, char *str, char *buffer);
 void built_in(char *str, char *buffer);
 void _cenv(void);
+void free_stuff(char **args, char *c, char *b);
 
 #endif /* _SHELL_H_ */

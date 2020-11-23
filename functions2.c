@@ -8,6 +8,7 @@
  * @str: string
  * @buffer: buffer
  */
+
 void message_exit(int code, char *copy, int digi, char *str, char *buffer)
 {
 	int j = 0;
@@ -42,11 +43,13 @@ void message_exit(int code, char *copy, int digi, char *str, char *buffer)
 		exit(0);
 	}
 }
+
 /**
  * built_in - Handles built in commands.
  * @str: code of built in command
  * @buffer: buffer
  */
+
 void built_in(char *str, char *buffer)
 {
 	int i = 0, j = 0;
@@ -70,9 +73,11 @@ void built_in(char *str, char *buffer)
 		i++;
 	}
 }
+
 /**
  * _cenv - prints every variable in the current environment.
  */
+
 void _cenv(void)
 {
 	int i = 0, j = 0;
@@ -86,4 +91,22 @@ void _cenv(void)
 		write(STDOUT_FILENO, "\n", 2);
 		i++;
 	}
+}
+
+/**
+ * free_stuff - Frees memory dinamically alocated with malloc in error.
+ * @args: pointer to pointers to free.
+ * @c: string of chars to free.
+ * @b: string of chars to free.
+ */
+
+void free_stuff(char **args, char *c, char *b)
+{
+	int i = 0;
+
+	while (args[i])
+		free(args[i++]);
+	free(args);
+	free(c);
+	free(b);
 }
