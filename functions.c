@@ -104,8 +104,9 @@ void execute(char **args, char *c, char *b)
 				i++;
 			write(STDOUT_FILENO, args[0], i), write(STDOUT_FILENO, ": ", 3);
 			write(STDOUT_FILENO, "Invalid command\n", 17);
+			write(STDERR_FILENO, "127", 5);
 			free_stuff(args, b, c);
-			exit(127);
+			exit(2);
 		}
 	}
 	else
