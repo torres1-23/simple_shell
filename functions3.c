@@ -146,10 +146,14 @@ void argunset(char *str)
 		free(argset[i++]);
 	free(argset);
 }
-
-void handle_sigint(int i) 
-{ 
+/**
+ * handle_sigint - handles signal inturupt from ctrl+c
+ * @i: value from main
+ * Return: void
+ */
+void handle_sigint(int i)
+{
 	(void)i;
 	write(STDOUT_FILENO, "\n", 2);
 	write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
-} 
+}

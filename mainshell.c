@@ -11,12 +11,13 @@ int main(void)
 	char *buffer = NULL, **arr = NULL, *comand = NULL;
 	size_t buffersize = 0;
 	ssize_t numc = 0;
-	int i = 0, status;
+	int status, val_isatty;
 
 	while (1)
 	{
 		signal(SIGINT, handle_sigint);
-		if (isatty(STDIN_FILENO) == 1)
+		val_isatty = isatty(STDIN_FILENO);
+		if (val_isatty == 1)
 			write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
 		numc = getline(&buffer, &buffersize, stdin);
 		if (numc == EOF)
@@ -34,20 +35,15 @@ int main(void)
 			{
 				arr = call_strtok(comand, " ");
 				execute(arr, comand, buffer);
-				i = 0;
-				while (arr[i])
-					free(arr[i++]);
-				free(arr);
+				free_bidimensional(arr);
 			}
 		}
 		free(comand);
 	}
 	free(buffer);
-	if ((isatty(STDIN_FILENO) == 1) && (numc = 0))
+	if ((val_isatty == 1) && (numc == 0))
 	{
-		while (environ[i])
-			free(environ[i++]);
-		free(environ);
+		free_bidimensional(environ);
 	}
 	return (0);
 }

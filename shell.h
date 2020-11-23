@@ -31,5 +31,6 @@ char *concat (char *name, char *value, int index);
 int _unsetenv(const char *name);
 void argunset(char *str);
 void handle_sigint(int i);
+void free_bidimensional(char **array);
 
 #endif /* _SHELL_H_ */
