@@ -50,10 +50,10 @@ void message_exit(int code, char *copy, int digi, char *str, char *buffer)
  * @buffer: buffer
  */
 
-void built_in(char *str, char *buffer)
+int built_in(char *str, char *buffer)
 {
 	int i = 0, j = 0;
-	char *words[] = {"exit", "env"};
+	char *words[] = {"exit", "env", "setenv", "unsetenv", NULL};
 	char *space = " ";
 
 	while (words[i])
@@ -66,12 +66,18 @@ void built_in(char *str, char *buffer)
 		else if (i == 1 && ((j == 4) || ((j == 3) && (str[j] == space[0]))))
 		{
 			_cenv();
-			break;
+			return (0);
 		}
-		else
-			break;
-		i++;
+		else if (i == 2 && ((j == 7) || ((j == 6) && (str[j] == space[0]))))
+		{
+			argset(str);
+			return (0);
+		}
+		if (i == 4)
+			return (1);
+		i++;	
 	}
+	return(0);
 }
 
 /**
@@ -92,7 +98,6 @@ void _cenv(void)
 		i++;
 	}
 }
-
 /**
  * free_stuff - Frees memory dinamically alocated with malloc in error.
  * @args: pointer to pointers to free.
@@ -109,4 +114,34 @@ void free_stuff(char **args, char *c, char *b)
 	free(args);
 	free(c);
 	free(b);
+}
+
+void argset(char *str)
+{
+	char **argset;
+	char *name = NULL, *value = NULL;
+	int i = 0;
+
+	argset = call_strtok(str, " ");
+	while (argset[i])
+		i++;
+	if (i == 1)
+	{	
+		_cenv();
+		return;
+	}
+	else if (i == 2)
+		name = argset[1];
+	else if (i == 3)	
+	{	
+		name = argset[1];
+		value = argset[2];
+	}			
+	else
+	{
+		write(STDOUT_FILENO, "Too many arguments\n", 20);
+		exit(EXIT_FAILURE);
+	}
+	printf("function %s, name %s, value %s\n", argset[0], name, value);
+	_setenv(name, value, 1);
 }

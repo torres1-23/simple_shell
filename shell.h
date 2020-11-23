@@ -21,8 +21,11 @@ void _cexit(char *str, char *buffer);
 int _atoi(char *s);
 char *delspace(char *str, int index);
 void message_exit(int code, char *copy, int digi, char *str, char *buffer);
-void built_in(char *str, char *buffer);
+int built_in(char *str, char *buffer);
 void _cenv(void);
 void free_stuff(char **args, char *c, char *b);
+int _setenv(char *name, char *value, int overwrite);
+void argset(char *str);
+char *concat (char *name, char *value, int index);
 
 #endif /* _SHELL_H_ */

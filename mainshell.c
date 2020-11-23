@@ -11,7 +11,7 @@ int main(void)
 	char *buffer = NULL, **arr = NULL, *comand = NULL;
 	size_t buffersize = 0;
 	ssize_t numc = 0;
-	int i = 0;
+	int i = 0, status;
 
 	while (1)
 	{
@@ -28,16 +28,19 @@ int main(void)
 		}
 		buffer[numc - 1] = '\0';
 		comand = delspace(buffer, 0);
-		built_in(comand, buffer);
-		if (numc != 1 && comand[0])
+		status = built_in(comand, buffer);
+		if (status == 1)
 		{
-			arr = call_strtok(comand, " ");
-			execute(arr, comand, buffer);
-			i = 0;
-			while (arr[i])
-				free(arr[i++]);
-			free(arr);
-		}
+			if (numc != 1 && comand[0])
+			{
+				arr = call_strtok(comand, " ");
+				execute(arr, comand, buffer);
+				i = 0;
+				while (arr[i])
+					free(arr[i++]);
+				free(arr);
+			}
+		}	
 	}
 	free(buffer);
 	return (0);
