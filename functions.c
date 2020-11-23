@@ -71,7 +71,7 @@ char **call_strtok(char *str, char *delimit)
 
 void execute(char **args, char *c, char *b)
 {
-	int status, i = 0;
+	int status, i = 0, stat = 0;
 	pid_t childn;
 	char *path;
 
@@ -88,25 +88,26 @@ void execute(char **args, char *c, char *b)
 	{
 		if (args[0][0] == '/')
 		{
-			if (execve(args[0], args, NULL) == 1)
+			stat = execve(args[0], args, NULL);
+			if (stat == 1)
 				exit(EXIT_SUCCESS);
 		}
+		printf("popo\n");
 		path = find_path(args[0]);
-		if (path)
+		printf("%s popo\n", path);
+		if (path && path[0])
 		{
 			args[0] = _strdup(path);
-			execve(args[0], args, NULL);
-			exit(EXIT_SUCCESS);
+			stat = execve(args[0], args, NULL);
+			if (stat == 1)
+				exit(EXIT_SUCCESS);
 		}
-		else
-		{
-			while (args[0][i])
-				i++;
-			write(STDOUT_FILENO, args[0], i), write(STDOUT_FILENO, ": ", 3);
-			write(STDOUT_FILENO, "Invalid command\n", 17);
-			free_stuff(args, b, c);
-			exit(EXIT_FAILURE);
-		}
+		while (args[0][i])
+			i++;
+		write(STDOUT_FILENO, args[0], i), write(STDOUT_FILENO, ": ", 3);
+		write(STDOUT_FILENO, "Invalid command\n", 17);
+		free_stuff(args, b, c);
+		exit(EXIT_FAILURE);
 	}
 	else
 		wait(&status);
@@ -120,24 +121,34 @@ void execute(char **args, char *c, char *b)
 
 char *find_path(char *exname)
 {
-	char *name = "PATH", *route;
+	char *name = "PATH", *route, *colon = ":";
 	char *getenvp, **directory;
 	int i = 0;
 	struct stat dir_stat;
 
 	getenvp = _getenv(name);
-	directory = call_strtok(getenvp, ":");
-	for (i = 0; directory[i]; i++)
+	if (getenvp[0] == colon[0])
 	{
-		route = str_concat(directory[i], exname);
-		if (stat(route, &dir_stat) == 0)
-			return (route);
-		free(route);
+		getenvp = malloc(sizeof(char) * 3);
+		getenvp = ".";
+		route = str_concat(getenvp, exname);
+		return (route);
 	}
-	i = 0;
-	while (directory[i])
-		free(directory[i++]);
-	free(directory);
+	if (getenvp && getenvp[0])
+	{
+		directory = call_strtok(getenvp, ":");
+		for (i = 0; directory[i]; i++)
+		{
+			route = str_concat(directory[i], exname);
+			if (stat(route, &dir_stat) == 0)
+				return (route);
+			free(route);
+		}
+		i = 0;
+		while (directory[i])
+			free(directory[i++]);
+		free(directory);
+	}
 	free(getenvp);
 	return (NULL);
 }
@@ -162,7 +173,7 @@ char *str_concat(char *s1, char *s2)
 		i++;
 	while (s2[j] != '\0')
 		j++;
-	con = malloc(sizeof(char) * (i + j + 2));
+	con = malloc(sizeof(char) * (i + j + 5));
 	if (con == 0)
 		return (NULL);
 	for (k = 0; k < i; k++)
