@@ -65,11 +65,13 @@ int _getposition(const char *name)
 	}
 	return (-1);
 }
+
 /**
  * _cexit - Function that cause normal process termination
  * @str: exit command with or without arguments
  * @buffer: buffer
  */
+
 void _cexit(char *str, char *buffer)
 {
 	int i = 0, j = 0, k = 0, l, digi = 0;

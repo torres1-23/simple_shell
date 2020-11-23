@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <stdlib.h>
+#include <signal.h>
 
 extern char **environ;
 char **call_strtok(char *str, char *delimit);
@@ -27,5 +28,8 @@ void free_stuff(char **args, char *c, char *b);
 int _setenv(char *name, char *value, int overwrite);
 void argset(char *str);
 char *concat (char *name, char *value, int index);
+int _unsetenv(const char *name);
+void argunset(char *str);
+void handle_sigint(int i);
 
 #endif /* _SHELL_H_ */

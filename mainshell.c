@@ -15,10 +15,9 @@ int main(void)
 
 	while (1)
 	{
+		signal(SIGINT, handle_sigint);
 		if (isatty(STDIN_FILENO) == 1)
-		{
 			write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
-		}
 		numc = getline(&buffer, &buffersize, stdin);
 		if (numc == EOF)
 		{
@@ -40,8 +39,15 @@ int main(void)
 					free(arr[i++]);
 				free(arr);
 			}
-		}	
+		}
+		free(comand);
 	}
 	free(buffer);
+	if ((isatty(STDIN_FILENO) == 1) && (numc = 0))
+	{
+		while (environ[i])
+			free(environ[i++]);
+		free(environ);
+	}
 	return (0);
 }

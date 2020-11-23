@@ -48,6 +48,7 @@ void message_exit(int code, char *copy, int digi, char *str, char *buffer)
  * built_in - Handles built in commands.
  * @str: code of built in command
  * @buffer: buffer
+ * Return: 0 if builtin succesful, 1 if not.
  */
 
 int built_in(char *str, char *buffer)
@@ -73,11 +74,16 @@ int built_in(char *str, char *buffer)
 			argset(str);
 			return (0);
 		}
+		else if (i == 3 && ((j == 9) || ((j == 8) && (str[j] == space[0]))))
+		{
+			argunset(str);
+			return (0);
+		}
 		if (i == 4)
 			return (1);
-		i++;	
+		i++;
 	}
-	return(0);
+	return (1);
 }
 
 /**
@@ -98,6 +104,7 @@ void _cenv(void)
 		i++;
 	}
 }
+
 /**
  * free_stuff - Frees memory dinamically alocated with malloc in error.
  * @args: pointer to pointers to free.
@@ -116,6 +123,11 @@ void free_stuff(char **args, char *c, char *b)
 	free(b);
 }
 
+/**
+ * argset - Set arguments for setenv function.
+ * @str: pointer to command string.
+ */
+
 void argset(char *str)
 {
 	char **argset;
@@ -126,22 +138,29 @@ void argset(char *str)
 	while (argset[i])
 		i++;
 	if (i == 1)
-	{	
+	{
 		_cenv();
+		i = 0;
+		while (argset[i])
+			free(argset[i++]);
+		free(argset);
 		return;
 	}
 	else if (i == 2)
 		name = argset[1];
-	else if (i == 3)	
-	{	
+	else if (i == 3)
+	{
 		name = argset[1];
 		value = argset[2];
-	}			
+	}
 	else
 	{
 		write(STDOUT_FILENO, "Too many arguments\n", 20);
-		exit(EXIT_FAILURE);
+		return;
 	}
-	printf("function %s, name %s, value %s\n", argset[0], name, value);
 	_setenv(name, value, 1);
+	i = 0;
+	while (argset[i])
+		free(argset[i++]);
+	free(argset);
 }
