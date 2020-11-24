@@ -93,7 +93,8 @@ int execute(char *exe, int cont, char **args, char *c, char *b)
 		(args[0][0] == '.' && args[0][1] == '/'))
 		{
 			stat = execve(args[0], args, environ);
-			exit(stat);
+			if(stat == 1)
+				exit(stat);
 		}
 		path = find_path(args[0]);
 		if (path && path[0] && args[0][0] != '/')
