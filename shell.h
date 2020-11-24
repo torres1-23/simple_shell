@@ -21,13 +21,14 @@ int _getposition(const char *name);
 void _cexit(char *exe, int cont, char *str, char *buffer);
 int _atoi(char *s);
 char *delspace(char *str, int index);
-void message_exit(int code, char *copy, int digi, char *str, char *buffer, char *exe, int cont);
+void message_exit(int code, char *copy, int digi,
+char *str, char *buffer, char *exe, int cont);
 int built_in(char *exe, int cont, char *str, char *buffer);
 void _cenv(void);
 void free_stuff(char **args, char *c, char *b);
 int _setenv(char *name, char *value, int overwrite);
 void argset(char *str);
-char *concat (char *name, char *value, int index);
+char *concat(char *name, char *value, int index);
 int _unsetenv(const char *name);
 void argunset(char *str);
 void handle_sigint(int i);

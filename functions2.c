@@ -22,11 +22,10 @@ char *buffer, char *exe, int cont)
 		;
 	if (code == 0)
 	{
-		
 		write(STDERR_FILENO, exe, i), write(STDERR_FILENO, ": ", 3);
 		p_int(cont);
-		write(STDERR_FILENO, ": exit: Illegal number: ", 25), write(STDERR_FILENO, copy, j);
-		write(STDERR_FILENO, "\n", 2);
+		write(STDERR_FILENO, ": exit: Illegal number: ", 25);
+		write(STDERR_FILENO, copy, j), write(STDERR_FILENO, "\n", 2);
 		free(copy);
 		return;
 	}

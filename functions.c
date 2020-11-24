@@ -67,9 +67,12 @@ char **call_strtok(char *str, char *delimit)
  * @args: arguments
  * @b: buffer
  * @c: command
+ * @exe: name of executable.
+ * @cont: number of commands written.
+ * Return: integer Status
  */
 
-int execute(char* exe, int cont, char **args, char *c, char *b)
+int execute(char *exe, int cont, char **args, char *c, char *b)
 {
 	int status, i = 0, stat = 0;
 	pid_t childn;
