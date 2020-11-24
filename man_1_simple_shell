@@ -1,0 +1,42 @@
+.TH hsh 1 "November 24, 2020" "1.0" "simple_shell Manual"
+
+.SH NAME
+.SH ""
+hsh \- Simple command-line interpreter UNIX.
+
+.SH DESCRIPTION
+.SH ""
+.B hsh
+A Unix shell is a command-line interpreter or shell that provides a command line user interface for Unix-like operating systems.
+This shell was inspired by the first UNIX shell created by Ken Thompson.
+.B hsh
+was created for learning purposes and developed by Alejandra Higuera and Mauricio Alejandro Torres from Holberton School, cohorte 13.
+
+.SS Invocation:
+.SH ""
+Invocate the shell in interactive mode by executing the command:
+.br
+.\&
+\&$ ./hsh.
+
+A prompt
+
+\& Alej@ Super Shell$ 
+
+will appear and the user may begin entering commands and executing them by
+pressing "Enter".
+
+Alternatively, a command can be entered and then piped into ./hsh. For example:
+.br
+.\&
+\&$ echo "hello world" | ./hsh
+
+.SS Example
+.SH ""
+
+hacer un ejemplo jejej 
+
+.SH "AUTHORS"
+.SH ""
+
+Alejandra Higuera and Mauricio Torres
