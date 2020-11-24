@@ -22,10 +22,10 @@ char *buffer, char *exe, int cont)
 		;
 	if (code == 0)
 	{
-		write(STDERR_FILENO, exe, i), write(STDERR_FILENO, ": ", 3);
+		write(STDERR_FILENO, exe, i - 1), write(STDERR_FILENO, ": ", 2);
 		p_int(cont);
-		write(STDERR_FILENO, ": exit: Illegal number: ", 25);
-		write(STDERR_FILENO, copy, j), write(STDERR_FILENO, "\n", 2);
+		write(STDERR_FILENO, ": exit: Illegal number: ", 24);
+		write(STDERR_FILENO, copy, j), write(STDERR_FILENO, "\n", 1);
 		free(copy);
 		return;
 	}
@@ -36,10 +36,10 @@ char *buffer, char *exe, int cont)
 	}
 	else if (code == 2)
 	{
-		write(STDERR_FILENO, exe, i), write(STDERR_FILENO, ": ", 3);
+		write(STDERR_FILENO, exe, i - 1), write(STDERR_FILENO, ": ", 2);
 		p_int(cont);
-		write(STDERR_FILENO, ": ", 3), write(STDERR_FILENO, copy, j);
-		write(STDERR_FILENO, ": not found\n", 13);
+		write(STDERR_FILENO, ": ", 2), write(STDERR_FILENO, copy, j - 1);
+		write(STDERR_FILENO, ": not found\n", 12);
 		return;
 	}
 	else
