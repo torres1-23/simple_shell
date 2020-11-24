@@ -37,7 +37,7 @@ int main(int argc __attribute__((unused)), char **argv)
 			if (numc != 1 && comand[0])
 			{
 				arr = call_strtok(comand, " ");
-				execute(arr, comand, buffer);
+				execute(argv[0], cont, arr, comand, buffer);
 				free_bidimensional(arr);
 			}
 		}

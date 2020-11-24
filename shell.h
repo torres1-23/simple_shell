@@ -14,7 +14,7 @@ extern char **environ;
 char **call_strtok(char *str, char *delimit);
 char *_strdup(char *str);
 char *find_path(char *exname);
-void execute(char **args, char *c, char *b);
+void execute(char *exe, int cont, char **args, char *c, char *b);
 char *str_concat(char *s1, char *s2);
 char *_getenv(const char *name);
 int _getposition(const char *name);

@@ -69,7 +69,7 @@ char **call_strtok(char *str, char *delimit)
  * @c: command
  */
 
-void execute(char **args, char *c, char *b)
+void execute(char* exe, int cont, char **args, char *c, char *b)
 {
 	int status, i = 0, stat = 0;
 	pid_t childn;
@@ -101,12 +101,9 @@ void execute(char **args, char *c, char *b)
 			if (stat == 1)
 				exit(EXIT_SUCCESS);
 		}
-		while (args[0][i])
-			i++;
-		write(STDOUT_FILENO, args[0], i), write(STDOUT_FILENO, ": ", 3);
-		write(STDOUT_FILENO, "Invalid command\n", 17);
+		message_exit(2, args[0], 0, NULL, NULL, exe, cont);
 		free_stuff(args, b, c);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	else
 		wait(&status);

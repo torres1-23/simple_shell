@@ -112,10 +112,10 @@ void _cexit(char *exe, int cont, char *str, char *buffer)
 		if (digi > 0 && digi <= 255)
 			message_exit(1, copy, digi, str, buffer, exe, cont);
 		else
-			message_exit(2, copy, digi, str, buffer, exe, cont);
+			message_exit(3, copy, digi, str, buffer, exe, cont);
 	}
 	else
-		message_exit(2, copy, digi, str, buffer, exe, cont);
+		message_exit(3, copy, digi, str, buffer, exe, cont);
 }
 
 /**

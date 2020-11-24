@@ -16,33 +16,36 @@ char *buffer, char *exe, int cont)
 {
 	int j = 0, i = 0;
 
+	while (exe[i++])
+		;
+	while (copy[j++])
+		;
 	if (code == 0)
 	{
-		while (exe[i++])
-			;
-		while (copy[j++])
-			;
-		write(STDERR_FILENO, exe, i);
-		write(STDERR_FILENO, ": ", 3);
+		
+		write(STDERR_FILENO, exe, i), write(STDERR_FILENO, ": ", 3);
 		p_int(cont);
-		write(STDERR_FILENO, ": exit: Illegal number: ", 25);
-		write(STDERR_FILENO, copy, j);
+		write(STDERR_FILENO, ": exit: Illegal number: ", 25), write(STDERR_FILENO, copy, j);
 		write(STDERR_FILENO, "\n", 2);
 		free(copy);
 		return;
 	}
 	else if (code == 1)
 	{
-		free(copy);
-		free(str);
-		free(buffer);
+		free(copy), free(str), free(buffer);
 		exit(digi);
+	}
+	else if (code == 2)
+	{
+		write(STDERR_FILENO, exe, i), write(STDERR_FILENO, ": ", 3);
+		p_int(cont);
+		write(STDERR_FILENO, ": ", 3), write(STDERR_FILENO, copy, j);
+		write(STDERR_FILENO, ": not found\n", 13);
+		return;
 	}
 	else
 	{
-		free(copy);
-		free(str);
-		free(buffer);
+		free(copy), free(str), free(buffer);
 		exit(0);
 	}
 }
