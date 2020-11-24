@@ -25,7 +25,7 @@ void p_int(int n)
 
 	if (!n)
 	{
-		write(1, "0", 1);
+		write(STDERR_FILENO, "0", 1);
 		return;
 	}
 	tmp = n;
@@ -40,7 +40,7 @@ void p_int(int n)
 	for (i = 0; i < len; i++)
 	{
 		c = ((tmp / n) % 10) + '0';
-		write(1, &c, 1);
+		write(STDERR_FILENO, &c, 1);
 		n = n / 10;
 	}
 }
