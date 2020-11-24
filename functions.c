@@ -92,9 +92,7 @@ void execute(char **args, char *c, char *b)
 			if (stat == 1)
 				exit(EXIT_SUCCESS);
 		}
-		printf("popo\n");
 		path = find_path(args[0]);
-		printf("%s popo\n", path);
 		if (path && path[0])
 		{
 			args[0] = _strdup(path);
