@@ -13,7 +13,7 @@ int main(int argc __attribute__((unused)), char **argv)
 	char *buffer = NULL, **arr = NULL, *comand = NULL;
 	size_t buffersize = 0;
 	ssize_t numc = 0;
-	int status, val_isatty;
+	int status, status1, val_isatty;
 	static int cont = 1;
 
 	while (1)
@@ -37,7 +37,7 @@ int main(int argc __attribute__((unused)), char **argv)
 			if (numc != 1 && comand[0])
 			{
 				arr = call_strtok(comand, " ");
-				execute(argv[0], cont, arr, comand, buffer);
+				status1 = execute(argv[0], cont, arr, comand, buffer);
 				free_bidimensional(arr);
 			}
 		}
@@ -49,5 +49,5 @@ int main(int argc __attribute__((unused)), char **argv)
 	{
 		free_bidimensional(environ);
 	}
-	return (0);
+	return (status1);
 }
