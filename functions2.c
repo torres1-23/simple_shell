@@ -39,7 +39,7 @@ char *buffer, char *exe, int cont)
 		write(STDERR_FILENO, exe, i), write(STDERR_FILENO, ": ", 3);
 		p_int(cont);
 		write(STDERR_FILENO, ": ", 3), write(STDERR_FILENO, copy, j);
-		write(STDERR_FILENO, ": not found\n", 13);
+		write(STDERR_FILENO, ": not found\n", 12);
 		return;
 	}
 	else
