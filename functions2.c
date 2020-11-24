@@ -7,28 +7,32 @@
  * @digi: argument digit
  * @str: string
  * @buffer: buffer
+ * @exe: name of executable.
+ * @cont: number of commands written.
  */
 
-void message_exit(int code, char *copy, int digi, char *str, char *buffer)
+void message_exit(int code, char *copy, int digi, char *str,
+char *buffer, char *exe, int cont)
 {
-	int j = 0;
+	int j = 0, i = 0;
 
 	if (code == 0)
 	{
-		j = 0;
+		while (exe[i++])
+			;
 		while (copy[j++])
 			;
-		write(STDOUT_FILENO, copy, j);
-		write(STDOUT_FILENO, ": ", 3);
-		write(STDOUT_FILENO, "Invalid argument\n", 18);
+		write(STDERR_FILENO, exe, i);
+		write(STDERR_FILENO, ": ", 3);
+		p_int(cont);
+		write(STDERR_FILENO, ": exit: Illegal number: ", 25);
+		write(STDERR_FILENO, copy, j);
+		write(STDERR_FILENO, "\n", 2);
 		free(copy);
-		free(str);
-		free(buffer);
-		exit(2);
+		return;
 	}
 	else if (code == 1)
 	{
-		write(STDOUT_FILENO, "exit\n", 6);
 		free(copy);
 		free(str);
 		free(buffer);
@@ -36,7 +40,6 @@ void message_exit(int code, char *copy, int digi, char *str, char *buffer)
 	}
 	else
 	{
-		write(STDOUT_FILENO, "exit\n", 6);
 		free(copy);
 		free(str);
 		free(buffer);
@@ -48,10 +51,12 @@ void message_exit(int code, char *copy, int digi, char *str, char *buffer)
  * built_in - Handles built in commands.
  * @str: code of built in command
  * @buffer: buffer
+ * @exe: name of executable.
+ * @cont: number of commands written.
  * Return: 0 if builtin succesful, 1 if not.
  */
 
-int built_in(char *str, char *buffer)
+int built_in(char *exe, int cont, char *str, char *buffer)
 {
 	int i = 0, j = 0;
 	char *words[] = {"exit", "env", "setenv", "unsetenv", NULL};
@@ -63,7 +68,10 @@ int built_in(char *str, char *buffer)
 		while (str[j] == words[i][j])
 			j++;
 		if (i == 0 && ((j == 5) || ((j == 4) && (str[j] == space[0]))))
-			_cexit(str, buffer);
+		{
+			_cexit(exe, cont, str, buffer);
+			return (0);
+		}
 		else if (i == 1 && ((j == 4) || ((j == 3) && (str[j] == space[0]))))
 		{
 			_cenv();

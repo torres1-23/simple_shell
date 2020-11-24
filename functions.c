@@ -86,7 +86,8 @@ void execute(char **args, char *c, char *b)
 	}
 	if (childn == 0)
 	{
-		if ((args[0][0] == '/' && args[0][1] != '/') || (args[0][0] == '.' && args[0][1] == '/'))
+		if ((args[0][0] == '/' && args[0][1] != '/') ||
+		(args[0][0] == '.' && args[0][1] == '/'))
 		{
 			stat = execve(args[0], args, environ);
 			if (stat == 1)

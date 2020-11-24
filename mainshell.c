@@ -3,15 +3,18 @@
 /**
  * main - Entry point
  * Simple shell written by Alejandro and Alejandra
+ * @argc: number of arguments.
+ * @argv: array of pointers to each argument.
  * Return: 0 in success.
  */
 
-int main(void)
+int main(int argc __attribute__((unused)), char **argv)
 {
 	char *buffer = NULL, **arr = NULL, *comand = NULL;
 	size_t buffersize = 0;
 	ssize_t numc = 0;
 	int status, val_isatty;
+	static int cont = 1;
 
 	while (1)
 	{
@@ -28,7 +31,7 @@ int main(void)
 		}
 		buffer[numc - 1] = '\0';
 		comand = delspace(buffer, 0);
-		status = built_in(comand, buffer);
+		status = built_in(argv[0], cont, comand, buffer);
 		if (status == 1)
 		{
 			if (numc != 1 && comand[0])
@@ -39,6 +42,7 @@ int main(void)
 			}
 		}
 		free(comand);
+		cont++;
 	}
 	free(buffer);
 	if ((val_isatty == 1) && (numc == 0))
