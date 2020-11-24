@@ -103,7 +103,7 @@ void execute(char* exe, int cont, char **args, char *c, char *b)
 		}
 		message_exit(2, args[0], 0, NULL, NULL, exe, cont);
 		free_stuff(args, b, c);
-		exit(127);
+		_exit(127);
 	}
 	else
 		wait(&status);
