@@ -48,7 +48,11 @@ int execute(char *exe, int cont, char **args, char *b)
 	{
 		wait(&status);
 		if (WIFEXITED(status))
+		{
 			stats = WEXITSTATUS(status);
+			if(stats == EACCES)
+				message_exit(2, 0, args[0], NULL, exe, cont, 0);
+
 	}
 	return (stats);
 }
@@ -70,7 +74,7 @@ char *find_path(char *exname)
 	if (getenvp[0] == colon[0])
 	{
 		getenvp = malloc(sizeof(char) * 3);
-		getenvp = ".";
+		getenvp = "."; / .:home  / .home
 		route = str_concat(getenvp, exname);
 		return (route);
 	}
@@ -82,6 +86,8 @@ char *find_path(char *exname)
 			route = str_concat(directory[i], exname);
 			if (stat(route, &dir_stat) == 0)
 				return (route);
+			/* c = (S_IFREG | S_IXUSR | S_IXGRP | S_IXOTH);	
+			if (((dir_stat.st_mode) & c) == c)*/
 			free(route);
 		}
 		i = 0;
