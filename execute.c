@@ -82,6 +82,7 @@ char *find_path(char *exname)
 			route = str_concat(directory[i], exname);
 			if (stat(route, &dir_stat) == 0)
 				return (route);
+			/*c = (S_IFREG | S_IXUSR | S_IXGRP | S_IXOTH) & (dir_stat.st_mode);*/
 			free(route);
 		}
 		i = 0;

@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <errno.h>
 
 extern char **environ;
 char **call_strtok(char *str, char *delimit);
