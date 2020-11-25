@@ -50,7 +50,10 @@ char *buffer, char *exe, int cont, int status1)
 		exit(digi - 256);
 	}
 	else
+	{
+		free(copy), free(str), free(buffer);
 		exit(status1);
+	}	
 }
 
 /**
