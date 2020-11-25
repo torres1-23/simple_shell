@@ -83,7 +83,6 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1)
 
 	while (str[i])
 		i++;
-	printf("%d\n", i);
 	if (i > 4)
 	{
 		i = 5;
