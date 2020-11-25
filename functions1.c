@@ -79,7 +79,7 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1)
 {
 	int i = 0, j = 0, k = 0, digi = 0, fg = 0;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-	char num[1020], *space = " ", *copy = NULL;
+	char num[10000], *space = " ", *copy = NULL;
 
 	copy = delspace(str, 5);
 	if (copy[i])
