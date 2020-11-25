@@ -32,7 +32,7 @@ int execute(char *exe, int cont, char **args, char *b)
 			stat = execve(args[0], args, environ);
 			if (stat == 1)
 				exit(stat);
-		}/* usar un stat antes de fork para asegurarme antes*/
+		}
 		path = find_path(args[0]);
 		if (path && path[0] && args[0][0] != '/')
 		{
@@ -66,10 +66,6 @@ char *find_path(char *exname)
 	int i = 0;
 	struct stat dir_stat;
 
-	if (stat(exname, &dir_stat) == 0)
-		{
-			return (exname);
-		}
 	getenvp = _getenv(name);
 	if (getenvp[0] == colon[0])
 	{
