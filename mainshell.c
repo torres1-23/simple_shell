@@ -13,7 +13,7 @@ int main(int argc __attribute__((unused)), char **argv)
 	char *buffer = NULL, **arr = NULL, *comand = NULL;
 	size_t buffersize = 0;
 	ssize_t numc = 0;
-	int status, status1 = 0, val_isatty;
+	int status = 0, status1 = 0, val_isatty;
 	static int cont = 1;
 
 	while (1)
