@@ -79,22 +79,27 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1)
 {
 	int i = 0, j = 0, k = 0, digi = 0, fg = 0;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-	char num[10000], *space = " ", *copy = NULL;
+	char num[1020], *space = " ";
 
-	copy = delspace(str, 5);
-	if (copy[i])
+	while (str[i])
+		i++;
+	printf("%d\n", i);
+	if (i > 4)
 	{
-		for (i = 0; copy[i]; i++)
+		i = 5;
+		while (str[i] == space[0])
+			i++;
+		for (i = 0; str[i]; i++)
 		{
 			j = 0;
 			while (dig[j])
 			{
-				if (copy[i] == dig[j])
+				if (str[i] == dig[j])
 				{
-					num[k++] = copy[i];
+					num[k++] = str[i];
 					break;
 				}
-				if (copy[i] == space[0])
+				if (str[i] == space[0])
 				{
 					fg = 1;
 					break;
@@ -103,7 +108,7 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1)
 			}
 			if (j == 10)
 			{
-				message_exit(0, copy, digi, str, buffer, exe, cont, 0);
+				message_exit(0, digi, str, buffer, exe, cont, 0);
 				return;
 			}
 			if (fg == 1)
@@ -111,12 +116,12 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1)
 		}
 		digi = _atoi(num);
 		if (digi > 0 && digi <= 255)
-			message_exit(1, copy, digi, str, buffer, exe, cont, 0);
+			message_exit(1, digi, str, buffer, exe, cont, 0);
 		else
-			message_exit(3, copy, digi, str, buffer, exe, cont, 0);
+			message_exit(3, digi, str, buffer, exe, cont, 0);
 	}
 	else
-		message_exit(4, copy, digi, str, buffer, exe, cont, status1);
+		message_exit(4, digi, str, buffer, exe, cont, status1);
 }
 
 /**

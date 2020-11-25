@@ -21,7 +21,7 @@ int _getposition(const char *name);
 void _cexit(char *exe, int cont, char *str, char *buffer, int status1);
 int _atoi(char *s);
 char *delspace(char *str, int index);
-int message_exit(int code, char *copy, int digi,
+int message_exit(int code, int digi,
 char *str, char *buffer, char *exe, int cont, int status1);
 int built_in(char *exe, int cont, char *str, char *buffer, int status1);
 void _cenv(void);

@@ -13,45 +13,45 @@
  * Return: int
  */
 
-int message_exit(int code, char *copy, int digi, char *str,
+int message_exit(int code, int digi, char *str,
 char *buffer, char *exe, int cont, int status1)
 {
 	int j = 0, i = 0;
 
 	while (exe[i++])
 		;
-	while (copy[j++])
+	while (str[j++])
 		;
 	if (code == 0)
 	{
 		write(STDERR_FILENO, exe, i - 1), write(STDERR_FILENO, ": ", 2);
 		p_int(cont);
 		write(STDERR_FILENO, ": exit: Illegal number: ", 24);
-		write(STDERR_FILENO, copy, j), write(STDERR_FILENO, "\n", 1);
-		free(copy);
+		write(STDERR_FILENO, str, j), write(STDERR_FILENO, "\n", 1);
+		free(str);
 		return (2);
 	}
 	else if (code == 1)
 	{
-		free(copy), free(str), free(buffer);
+		free(str), free(buffer);
 		exit(digi);
 	}
 	else if (code == 2)
 	{
 		write(STDERR_FILENO, exe, i - 1), write(STDERR_FILENO, ": ", 2);
 		p_int(cont);
-		write(STDERR_FILENO, ": ", 2), write(STDERR_FILENO, copy, j - 1);
+		write(STDERR_FILENO, ": ", 2), write(STDERR_FILENO, str, j - 1);
 		write(STDERR_FILENO, ": not found\n", 12);
 		return (127);
 	}
 	else if (code == 3)
 	{
-		free(copy), free(str), free(buffer);
+		free(str), free(buffer);
 		exit(digi - 256);
 	}
 	else
 	{
-		free(copy), free(str), free(buffer);
+		free(str), free(buffer);
 		exit(status1);
 	}
 }
