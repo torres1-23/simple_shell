@@ -72,6 +72,7 @@ int _getposition(const char *name)
  * @buffer: buffer
  * @exe: name of executable.
  * @cont: number of commands written.
+ * @status1: status to return on exit
  */
 
 void _cexit(char *exe, int cont, char *str, char *buffer, int status1)

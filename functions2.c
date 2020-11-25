@@ -9,6 +9,8 @@
  * @buffer: buffer
  * @exe: name of executable.
  * @cont: number of commands written.
+ * @status1: status to return on exit
+ * Return: int
  */
 
 int message_exit(int code, char *copy, int digi, char *str,
@@ -48,7 +50,7 @@ char *buffer, char *exe, int cont, int status1)
 		exit(digi - 256);
 	}
 	else
-		exit(status1);	
+		exit(status1);
 }
 
 /**
@@ -57,6 +59,7 @@ char *buffer, char *exe, int cont, int status1)
  * @buffer: buffer
  * @exe: name of executable.
  * @cont: number of commands written.
+ * @status1: status to return on exit
  * Return: 0 if builtin succesful, 1 if not.
  */
 
