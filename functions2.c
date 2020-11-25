@@ -45,7 +45,7 @@ char *buffer, char *exe, int cont)
 	else
 	{
 		free(copy), free(str), free(buffer);
-		exit(0);
+		exit(digi - 256);
 	}
 }
 
