@@ -68,7 +68,6 @@ char *find_path(char *exname)
 
 	if (stat(exname, &dir_stat) == 0)
 		{
-			printf("aleja prueba \n");
 			return (exname);
 		}
 	getenvp = _getenv(name);
