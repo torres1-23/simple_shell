@@ -10,7 +10,7 @@
 
 int main(int argc __attribute__((unused)), char **argv)
 {
-	char *buffer = NULL, **arr = NULL, *comand = NULL, copy[10000] = {'\0'};
+	char *buffer = NULL, **arr = NULL, *comand = NULL, copy[5000] = {'\0'};
 	size_t buffersize = 0;
 	ssize_t numc = 0;
 	int status = 0, status1 = 0, val_isatty;
