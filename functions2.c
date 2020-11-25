@@ -4,7 +4,7 @@
  * message_exit - Print exit message.
  * @code: code to switch the message
  * @digi: argument digit
- * @str: string
+ * @copy: string without spaces.
  * @buffer: buffer
  * @exe: name of executable.
  * @cont: number of commands written.
@@ -12,7 +12,7 @@
  * Return: int
  */
 
-int message_exit(int code, int digi, char *copy, char *str,
+int message_exit(int code, int digi, char *copy,
 char *buffer, char *exe, int cont, int status1)
 {
 	int j = 0, i = 0;
@@ -27,30 +27,29 @@ char *buffer, char *exe, int cont, int status1)
 		p_int(cont);
 		write(STDERR_FILENO, ": exit: Illegal number: ", 24);
 		write(STDERR_FILENO, copy, j), write(STDERR_FILENO, "\n", 1);
-		free(str);
 		return (2);
 	}
 	else if (code == 1)
 	{
-		free(str), free(buffer);
+		free(buffer);
 		exit(digi);
 	}
 	else if (code == 2)
 	{
 		write(STDERR_FILENO, exe, i - 1), write(STDERR_FILENO, ": ", 2);
 		p_int(cont);
-		write(STDERR_FILENO, ": ", 2), write(STDERR_FILENO, str, j - 1);
+		write(STDERR_FILENO, ": ", 2), write(STDERR_FILENO, copy, j - 1);
 		write(STDERR_FILENO, ": not found\n", 12);
 		return (127);
 	}
 	else if (code == 3)
 	{
-		free(str), free(buffer);
+		free(buffer);
 		exit(digi - 256);
 	}
 	else
 	{
-		free(str), free(buffer);
+		free(buffer);
 		exit(status1);
 	}
 }
@@ -62,10 +61,12 @@ char *buffer, char *exe, int cont, int status1)
  * @exe: name of executable.
  * @cont: number of commands written.
  * @status1: status to return on exit
+ * @copy: string without spaces.
  * Return: 0 if builtin succesful, 1 if not.
  */
 
-int built_in(char *exe, int cont, char *str, char *buffer, int status1, char *copy)
+int built_in(char *exe, int cont, char *str,
+char *buffer, int status1, char *copy)
 {
 	int i = 0, j = 0;
 	char *words[] = {"exit", "env", "setenv", "unsetenv", NULL};

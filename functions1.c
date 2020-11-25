@@ -72,17 +72,18 @@ int _getposition(const char *name)
  * @buffer: buffer
  * @exe: name of executable.
  * @cont: number of commands written.
- * @status1: status to return on exit
+ * @status1: status to return on exit.
+ * @copy: string without spaces.
  */
 
-void _cexit(char *exe, int cont, char *str, char *buffer, int status1, char *copy)
+void _cexit(char *exe, int cont, char *str,
+char *buffer, int status1, char *copy)
 {
 	int i = 5, j = 0, k = 0, digi = 0, fg = 0;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-	char num[1020], *space = " ", *strc;
+	char num[1020] = {'\0'}, *space = " ", *strc = NULL;
 
 	strc = delspace(str, copy, 5);
-	printf("copy = %s \n", copy);
 	if (strc[i])
 	{
 		for (i = 0; strc[i]; i++)
@@ -104,7 +105,7 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1, char *cop
 			}
 			if (j == 10)
 			{
-				message_exit(0, digi, strc, str, buffer, exe, cont, 0);
+				message_exit(0, digi, strc, buffer, exe, cont, 0);
 				return;
 			}
 			if (fg == 1)
@@ -112,12 +113,12 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1, char *cop
 		}
 		digi = _atoi(num);
 		if (digi > 0 && digi <= 255)
-			message_exit(1, digi, strc, str, buffer, exe, cont, 0);
+			message_exit(1, digi, strc, buffer, exe, cont, 0);
 		else
-			message_exit(3, digi, strc, str, buffer, exe, cont, 0);
+			message_exit(3, digi, strc, buffer, exe, cont, 0);
 	}
 	else
-		message_exit(4, digi, strc, str, buffer, exe, cont, status1);
+		message_exit(4, digi, strc, buffer, exe, cont, status1);
 }
 
 /**
@@ -130,7 +131,7 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1, char *cop
 int _atoi(char *s)
 {
 	unsigned int i = 0, length = 0, sign = 0, sum = 0;
-	unsigned int init, finish, d, num;
+	unsigned int init = 0, finish = 0, d = 0, num = 0;
 
 	while (s[length] != '\0')
 		length++;
@@ -170,18 +171,17 @@ int _atoi(char *s)
 /**
  * delspace - Function that deletes space before find a character
  * @str: string to remove the space
+ * @copy: string without spaces.
  * @index: index to star to remove
  * Return: return a pointer to the new string starting with a caracter o null
  */
 char *delspace(char *str, char *copy, int index)
 {
 	char *space = " ";
-	int i = index, j = 0, len = 0;
+	int i = index, j = 0;
 
 	if (!str)
 		return (NULL);
-	while (str[len++])
-	;
 	while (str[i])
 	{
 		if (str[i] != space[0])
