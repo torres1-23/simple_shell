@@ -74,7 +74,7 @@ char **call_strtok(char *str, char *delimit)
 
 int execute(char *exe, int cont, char **args, char *c, char *b)
 {
-	int status, i = 0, stat = 0;
+	int status, i = 0, stat = 0, stats;
 	pid_t childn;
 	char *path;
 
@@ -103,7 +103,7 @@ int execute(char *exe, int cont, char **args, char *c, char *b)
 			stat = execve(args[0], args, environ);
 			exit(stat);
 		}
-		message_exit(2, args[0], 0, NULL, NULL, exe, cont, 0);
+		message_exit(2, 0, args[0], NULL, exe, cont, 0);
 		free_stuff(args, b, c);
 		exit(127);
 	}
@@ -111,9 +111,9 @@ int execute(char *exe, int cont, char **args, char *c, char *b)
 	{
 		wait(&status);
 		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
+			stats = WEXITSTATUS(status);
 	}
-	return (status);
+	return (stats);
 }
 
 /**
