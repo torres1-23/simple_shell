@@ -74,7 +74,7 @@ char **call_strtok(char *str, char *delimit)
 
 int execute(char *exe, int cont, char **args, char *c, char *b)
 {
-	int status, i = 0, stat = 0, stats;
+	int status, i = 0, stat = 0;
 	pid_t childn;
 	char *path;
 
@@ -89,14 +89,6 @@ int execute(char *exe, int cont, char **args, char *c, char *b)
 	}
 	if (childn == 0)
 	{
-		
-		path = find_path(args[0]);
-		if (path && path[0] && args[0][0] != '/')
-		{
-			args[0] = _strdup(path);
-			stat = execve(args[0], args, environ);
-			exit(stat);
-		}
 		if ((args[0][0] == '/' && args[0][1] != '/') ||
 		(args[0][0] == '.' && args[0][1] == '/'))
 		{
@@ -104,7 +96,14 @@ int execute(char *exe, int cont, char **args, char *c, char *b)
 			if (stat == 1)
 				exit(stat);
 		}
-		message_exit(2, 0, args[0], NULL, exe, cont, 0);
+		path = find_path(args[0]);
+		if (path && path[0] && args[0][0] != '/')
+		{
+			args[0] = _strdup(path);
+			stat = execve(args[0], args, environ);
+			exit(stat);
+		}
+		message_exit(2, args[0], 0, NULL, NULL, exe, cont, 0);
 		free_stuff(args, b, c);
 		exit(127);
 	}
@@ -112,9 +111,9 @@ int execute(char *exe, int cont, char **args, char *c, char *b)
 	{
 		wait(&status);
 		if (WIFEXITED(status))
-			stats = WEXITSTATUS(status);
+			status = WEXITSTATUS(status);
 	}
-	return (stats);
+	return (status);
 }
 
 /**
