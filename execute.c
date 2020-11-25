@@ -62,7 +62,7 @@ int execute(char *exe, int cont, char **args, char *b)
 
 char *find_path(char *exname)
 {
-	char *name = "PATH", *route, *colon = ":", *exe = "./";
+	char *name = "PATH", *route, *colon = ":";
 	char *getenvp, **directory;
 	int i = 0;
 	struct stat dir_stat;
