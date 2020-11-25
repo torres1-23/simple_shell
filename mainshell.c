@@ -46,8 +46,8 @@ int main(int argc __attribute__((unused)), char **argv)
 	}
 	free(buffer);
 	if ((val_isatty == 1) && (numc == 0))
-	{
 		free_bidimensional(environ);
-	}
+	if(status == 0)
+		return (status);
 	return (status1);
 }
