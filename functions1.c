@@ -75,30 +75,27 @@ int _getposition(const char *name)
  * @status1: status to return on exit
  */
 
-void _cexit(char *exe, int cont, char *str, char *buffer, int status1)
+void _cexit(char *exe, int cont, char *str, char *buffer, int status1, char *copy)
 {
-	int i = 0, j = 0, k = 0, digi = 0, fg = 0;
+	int i = 5, j = 0, k = 0, digi = 0, fg = 0;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-	char num[1020], *space = " ";
+	char num[1020], *space = " ", *strc;
 
-	while (str[i])
-		i++;
-	if (i > 4)
+	strc = delspace(str, copy, 5);
+	printf("copy = %s \n", copy);
+	if (strc[i])
 	{
-		i = 5;
-		while (str[i] == space[0])
-			i++;
-		for (i = 0; str[i]; i++)
+		for (i = 0; strc[i]; i++)
 		{
 			j = 0;
 			while (dig[j])
 			{
-				if (str[i] == dig[j])
+				if (strc[i] == dig[j])
 				{
-					num[k++] = str[i];
+					num[k++] = strc[i];
 					break;
 				}
-				if (str[i] == space[0])
+				if (strc[i] == space[0])
 				{
 					fg = 1;
 					break;
@@ -107,7 +104,7 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1)
 			}
 			if (j == 10)
 			{
-				message_exit(0, digi, str, buffer, exe, cont, 0);
+				message_exit(0, digi, strc, str, buffer, exe, cont, 0);
 				return;
 			}
 			if (fg == 1)
@@ -115,12 +112,12 @@ void _cexit(char *exe, int cont, char *str, char *buffer, int status1)
 		}
 		digi = _atoi(num);
 		if (digi > 0 && digi <= 255)
-			message_exit(1, digi, str, buffer, exe, cont, 0);
+			message_exit(1, digi, strc, str, buffer, exe, cont, 0);
 		else
-			message_exit(3, digi, str, buffer, exe, cont, 0);
+			message_exit(3, digi, strc, str, buffer, exe, cont, 0);
 	}
 	else
-		message_exit(4, digi, str, buffer, exe, cont, status1);
+		message_exit(4, digi, strc, str, buffer, exe, cont, status1);
 }
 
 /**
@@ -176,10 +173,10 @@ int _atoi(char *s)
  * @index: index to star to remove
  * Return: return a pointer to the new string starting with a caracter o null
  */
-char *delspace(char *str, int index)
+char *delspace(char *str, char *copy, int index)
 {
-	char *copy = NULL, *space = " ";
-	int i = index, j, len = 0;
+	char *space = " ";
+	int i = index, j = 0, len = 0;
 
 	if (!str)
 		return (NULL);
@@ -191,10 +188,7 @@ char *delspace(char *str, int index)
 			break;
 		i++;
 	}
-	copy = malloc(sizeof(char) * (len + 1));
-	if (copy == NULL)
-		return (NULL);
-	for (j = 0; j < len; j++)
+	for (j = 0; str[i]; j++)
 		copy[j] = str[i++];
 	copy[j] = '\0';
 	return (copy);

@@ -10,7 +10,7 @@
 
 int main(int argc __attribute__((unused)), char **argv)
 {
-	char *buffer = NULL, **arr = NULL, *comand = NULL;
+	char *buffer = NULL, **arr = NULL, *comand = NULL, copy[5000];
 	size_t buffersize = 0;
 	ssize_t numc = 0;
 	int status = 0, status1 = 0, val_isatty;
@@ -30,18 +30,17 @@ int main(int argc __attribute__((unused)), char **argv)
 			break;
 		}
 		buffer[numc - 1] = '\0';
-		comand = delspace(buffer, 0);
-		status = built_in(argv[0], cont, comand, buffer, status1);
+		comand = delspace(buffer, copy, 0);
+		status = built_in(argv[0], cont, comand, buffer, status1, copy);
 		if (status == 1)
 		{
 			if (numc != 1 && comand[0])
 			{
 				arr = call_strtok(comand, " ");
-				status1 = execute(argv[0], cont, arr, comand, buffer);
+				status1 = execute(argv[0], cont, arr, buffer);
 				free_bidimensional(arr);
 			}
 		}
-		free(comand);
 		cont++;
 	}
 	free(buffer);

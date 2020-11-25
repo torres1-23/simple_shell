@@ -3,7 +3,6 @@
 /**
  * message_exit - Print exit message.
  * @code: code to switch the message
- * @copy: String
  * @digi: argument digit
  * @str: string
  * @buffer: buffer
@@ -13,21 +12,21 @@
  * Return: int
  */
 
-int message_exit(int code, int digi, char *str,
+int message_exit(int code, int digi, char *copy, char *str,
 char *buffer, char *exe, int cont, int status1)
 {
 	int j = 0, i = 0;
 
 	while (exe[i++])
 		;
-	while (str[j++])
+	while (copy[j++])
 		;
 	if (code == 0)
 	{
 		write(STDERR_FILENO, exe, i - 1), write(STDERR_FILENO, ": ", 2);
 		p_int(cont);
 		write(STDERR_FILENO, ": exit: Illegal number: ", 24);
-		write(STDERR_FILENO, str, j), write(STDERR_FILENO, "\n", 1);
+		write(STDERR_FILENO, copy, j), write(STDERR_FILENO, "\n", 1);
 		free(str);
 		return (2);
 	}
@@ -66,7 +65,7 @@ char *buffer, char *exe, int cont, int status1)
  * Return: 0 if builtin succesful, 1 if not.
  */
 
-int built_in(char *exe, int cont, char *str, char *buffer, int status1)
+int built_in(char *exe, int cont, char *str, char *buffer, int status1, char *copy)
 {
 	int i = 0, j = 0;
 	char *words[] = {"exit", "env", "setenv", "unsetenv", NULL};
@@ -79,7 +78,7 @@ int built_in(char *exe, int cont, char *str, char *buffer, int status1)
 			j++;
 		if (i == 0 && ((j == 5) || ((j == 4) && (str[j] == space[0]))))
 		{
-			_cexit(exe, cont, str, buffer, status1);
+			_cexit(exe, cont, str, buffer, status1, copy);
 			return (0);
 		}
 		else if (i == 1 && ((j == 4) || ((j == 3) && (str[j] == space[0]))))
@@ -126,18 +125,16 @@ void _cenv(void)
 /**
  * free_stuff - Frees memory dinamically alocated with malloc in error.
  * @args: pointer to pointers to free.
- * @c: string of chars to free.
  * @b: string of chars to free.
  */
 
-void free_stuff(char **args, char *c, char *b)
+void free_stuff(char **args, char *b)
 {
 	int i = 0;
 
 	while (args[i])
 		free(args[i++]);
 	free(args);
-	free(c);
 	free(b);
 }
 

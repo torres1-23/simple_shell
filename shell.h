@@ -14,18 +14,18 @@ extern char **environ;
 char **call_strtok(char *str, char *delimit);
 char *_strdup(char *str);
 char *find_path(char *exname);
-int execute(char *exe, int cont, char **args, char *c, char *b);
+int execute(char *exe, int cont, char **args, char *b);
 char *str_concat(char *s1, char *s2);
 char *_getenv(const char *name);
 int _getposition(const char *name);
-void _cexit(char *exe, int cont, char *str, char *buffer, int status1);
+void _cexit(char *exe, int cont, char *str, char *buffer, int status1, char *copy);
 int _atoi(char *s);
-char *delspace(char *str, int index);
-int message_exit(int code, int digi,
+char *delspace(char *str, char *copy, int index);
+int message_exit(int code, int digi, char *copy,
 char *str, char *buffer, char *exe, int cont, int status1);
-int built_in(char *exe, int cont, char *str, char *buffer, int status1);
+int built_in(char *exe, int cont, char *str, char *buffer, int status1, char *copy);
 void _cenv(void);
-void free_stuff(char **args, char *c, char *b);
+void free_stuff(char **args, char *b);
 int _setenv(char *name, char *value, int overwrite);
 void argset(char *str);
 char *concat(char *name, char *value, int index);

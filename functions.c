@@ -72,7 +72,7 @@ char **call_strtok(char *str, char *delimit)
  * Return: integer Status
  */
 
-int execute(char *exe, int cont, char **args, char *c, char *b)
+int execute(char *exe, int cont, char **args, char *b)
 {
 	int status, i = 0, stat = 0, stats;
 	pid_t childn;
@@ -103,8 +103,8 @@ int execute(char *exe, int cont, char **args, char *c, char *b)
 			stat = execve(args[0], args, environ);
 			exit(stat);
 		}
-		message_exit(2, 0, args[0], NULL, exe, cont, 0);
-		free_stuff(args, b, c);
+		message_exit(2, 0, NULL, args[0], NULL, exe, cont, 0);
+		free_stuff(args, b);
 		exit(127);
 	}
 	else
