@@ -74,7 +74,7 @@ int _getposition(const char *name)
  * @cont: number of commands written.
  */
 
-void _cexit(char *exe, int cont, char *str, char *buffer)
+void _cexit(char *exe, int cont, char *str, char *buffer, int status1)
 {
 	int i = 0, j = 0, k = 0, digi = 0, fg = 0;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
@@ -102,7 +102,7 @@ void _cexit(char *exe, int cont, char *str, char *buffer)
 			}
 			if (j == 10)
 			{
-				message_exit(0, copy, digi, str, buffer, exe, cont);
+				message_exit(0, copy, digi, str, buffer, exe, cont, 0);
 				return;
 			}
 			if (fg == 1)
@@ -110,12 +110,12 @@ void _cexit(char *exe, int cont, char *str, char *buffer)
 		}
 		digi = _atoi(num);
 		if (digi > 0 && digi <= 255)
-			message_exit(1, copy, digi, str, buffer, exe, cont);
+			message_exit(1, copy, digi, str, buffer, exe, cont, 0);
 		else
-			message_exit(3, copy, digi, str, buffer, exe, cont);
+			message_exit(3, copy, digi, str, buffer, exe, cont, 0);
 	}
 	else
-		message_exit(3, copy, digi, str, buffer, exe, cont);
+		message_exit(4, copy, digi, str, buffer, exe, cont, status1);
 }
 
 /**

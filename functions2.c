@@ -11,8 +11,8 @@
  * @cont: number of commands written.
  */
 
-void message_exit(int code, char *copy, int digi, char *str,
-char *buffer, char *exe, int cont)
+int message_exit(int code, char *copy, int digi, char *str,
+char *buffer, char *exe, int cont, int status1)
 {
 	int j = 0, i = 0;
 
@@ -27,7 +27,7 @@ char *buffer, char *exe, int cont)
 		write(STDERR_FILENO, ": exit: Illegal number: ", 24);
 		write(STDERR_FILENO, copy, j), write(STDERR_FILENO, "\n", 1);
 		free(copy);
-		return;
+		return (2);
 	}
 	else if (code == 1)
 	{
@@ -40,13 +40,15 @@ char *buffer, char *exe, int cont)
 		p_int(cont);
 		write(STDERR_FILENO, ": ", 2), write(STDERR_FILENO, copy, j - 1);
 		write(STDERR_FILENO, ": not found\n", 12);
-		return;
+		return (127);
 	}
-	else
+	else if (code == 3)
 	{
 		free(copy), free(str), free(buffer);
 		exit(digi - 256);
 	}
+	else
+		exit(status1);	
 }
 
 /**
@@ -58,7 +60,7 @@ char *buffer, char *exe, int cont)
  * Return: 0 if builtin succesful, 1 if not.
  */
 
-int built_in(char *exe, int cont, char *str, char *buffer)
+int built_in(char *exe, int cont, char *str, char *buffer, int status1)
 {
 	int i = 0, j = 0;
 	char *words[] = {"exit", "env", "setenv", "unsetenv", NULL};
@@ -71,7 +73,7 @@ int built_in(char *exe, int cont, char *str, char *buffer)
 			j++;
 		if (i == 0 && ((j == 5) || ((j == 4) && (str[j] == space[0]))))
 		{
-			_cexit(exe, cont, str, buffer);
+			_cexit(exe, cont, str, buffer, status1);
 			return (0);
 		}
 		else if (i == 1 && ((j == 4) || ((j == 3) && (str[j] == space[0]))))

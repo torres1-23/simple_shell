@@ -103,7 +103,7 @@ int execute(char *exe, int cont, char **args, char *c, char *b)
 			stat = execve(args[0], args, environ);
 			exit(stat);
 		}
-		message_exit(2, args[0], 0, NULL, NULL, exe, cont);
+		message_exit(2, args[0], 0, NULL, NULL, exe, cont, 0);
 		free_stuff(args, b, c);
 		exit(127);
 	}
