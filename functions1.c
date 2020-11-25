@@ -79,12 +79,12 @@ int _getposition(const char *name)
 void _cexit(char *exe, int cont, char *str,
 char *buffer, int status1, char *copy)
 {
-	int i = 5, j = 0, k = 0, digi = 0, fg = 0;
+	int i = 0, j = 0, k = 0, digi = 0, fg = 0;
 	char dig[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
 	char num[1020] = {'\0'}, *space = " ", *strc = NULL;
 
 	strc = delspace(str, copy, 5);
-	if (strc[i])
+	if (strc && strc[i])
 	{
 		for (i = 0; strc[i]; i++)
 		{
