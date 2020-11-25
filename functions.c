@@ -110,7 +110,8 @@ int execute(char *exe, int cont, char **args, char *c, char *b)
 	else
 	{
 		wait(&status);
-		status = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
 	}
 	return (status);
 }
