@@ -43,34 +43,45 @@ int _setenv(char *name, char *value, int overwrite)
 }
 
 /**
- * concat - function that concatenate two strings
- * @name: first string
- * @value: second string.
- * @index: index to start concatenating.
- * Return: pointer to the string concatenated.
+ * argset - Set arguments for setenv function.
+ * @str: pointer to command string.
  */
 
-char *concat(char *name, char *value, int index)
+void argset(char *str)
 {
-	int len = 0, len1 = 0, i = 0, j = 0;
+	char **argset;
+	char *name = NULL, *value = NULL;
+	int i = 0;
 
-	while (name[len])
-		len++;
-	if (value)
+	argset = call_strtok(str, " ");
+	while (argset[i])
+		i++;
+	if (i == 1)
 	{
-		while (value[len1])
-			len1++;
+		_cenv();
+		i = 0;
+		while (argset[i])
+			free(argset[i++]);
+		free(argset);
+		return;
+	}
+	else if (i == 2)
+		name = argset[1];
+	else if (i == 3)
+	{
+		name = argset[1];
+		value = argset[2];
 	}
 	else
-		value = "";
-	environ[index] = malloc(sizeof(char) * (len + len1 + 2));
-	for (i = 0; i < len; i++)
-		environ[index][i] =  name[i];
-	environ[index][i++] = '=';
-	for (j = 0; j < len1; j++)
-		environ[index][i++] = value[j];
-	environ[index][i] = '\0';
-	return (environ[index]);
+	{
+		write(STDOUT_FILENO, "Too many arguments\n", 20);
+		return;
+	}
+	_setenv(name, value, 1);
+	i = 0;
+	while (argset[i])
+		free(argset[i++]);
+	free(argset);
 }
 
 /**
@@ -145,15 +156,4 @@ void argunset(char *str)
 	while (argset[i])
 		free(argset[i++]);
 	free(argset);
-}
-/**
- * handle_sigint - handles signal inturupt from ctrl+c
- * @i: value from main
- * Return: void
- */
-void handle_sigint(int i)
-{
-	(void)i;
-	write(STDOUT_FILENO, "\n", 2);
-	write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
 }

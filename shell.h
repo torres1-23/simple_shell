@@ -18,7 +18,7 @@ int execute(char *exe, int cont, char **args, char *b);
 char *str_concat(char *s1, char *s2);
 char *_getenv(const char *name);
 int _getposition(const char *name);
-void _cexit(char *exe, int cont, char *str,
+int _cexit(char *exe, int cont, char *str,
 char *buffer, int status1, char *copy);
 int _atoi(char *s);
 char *delspace(char *str, char *copy, int index);
