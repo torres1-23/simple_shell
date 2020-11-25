@@ -53,7 +53,7 @@ char *buffer, char *exe, int cont, int status1)
 	{
 		free(copy), free(str), free(buffer);
 		exit(status1);
-	}	
+	}
 }
 
 /**
