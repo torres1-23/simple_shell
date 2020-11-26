@@ -20,17 +20,16 @@ int execute(char *exe, int cont, char **args, char *b)
 	childn = fork();
 	if (childn == 0)
 	{
-		if ((args[0][0] == '/' && args[0][1] != '/') ||
-		(args[0][0] == '.' && args[0][1] == '/'))
-		{
+		if (args[0][0] == '/' && args[0][1] != '/')
 			stat = execve(args[0], args, environ);
-		}
-		else
+		path = find_path(args[0]);
+		if (path)
 		{
-			path = find_path(args[0]);
 			args[0] = _strdup(path);
 			stat = execve(args[0], args, environ);
 		}
+		else  if (args[0][0] == '.' && args[0][1] == '/')
+			stat = execve(args[0], args, environ);
 		free_stuff(args, b);
 		err_hd(stat, path);
 	}
@@ -57,7 +56,7 @@ int execute(char *exe, int cont, char **args, char *b)
 
 char *find_path(char *exname)
 {
-	char *name = "PATH", *route, *colon = ":", *dot = ".";
+	char *name = "PATH=", *route, *colon = ":", *dot = ".";
 	char *getenvp, **directory;
 	int i = 0;
 	struct stat dir_stat;
