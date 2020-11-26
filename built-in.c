@@ -14,6 +14,7 @@ int built_in(char *str, char *buffer, int status1)
 	char *words[] = {"exit", "env", "setenv", "unsetenv", NULL};
 	char *space = " ";
 
+	(void)status;
 	while (words[i])
 	{
 		j = 0;
