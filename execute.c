@@ -20,16 +20,17 @@ int execute(char *exe, int cont, char **args, char *b)
 	childn = fork();
 	if (childn == 0)
 	{
-		if (args[0][0] == '/' && args[0][1] != '/')
-			stat = execve(args[0], args, environ);
-		path = find_path(args[0]);
-		if (path)
+		if ((args[0][0] == '/' && args[0][1] != '/') ||
+		(args[0][0] == '.' && args[0][1] == '/'))
 		{
+			stat = execve(args[0], args, environ);
+		}
+		else
+		{
+			path = find_path(args[0]);
 			args[0] = _strdup(path);
 			stat = execve(args[0], args, environ);
 		}
-		else  if (args[0][0] == '.' && args[0][1] == '/')
-			stat = execve(args[0], args, environ);
 		free_stuff(args, b);
 		err_hd(stat, path);
 	}
@@ -56,7 +57,7 @@ int execute(char *exe, int cont, char **args, char *b)
 
 char *find_path(char *exname)
 {
-	char *name = "PATH=", *route, *colon = ":", *dot = ".";
+	char *name = "PATH=", *route, *colon = ":";
 	char *getenvp, **directory;
 	int i = 0;
 	struct stat dir_stat;
@@ -64,7 +65,9 @@ char *find_path(char *exname)
 	getenvp = _getenv(name);
 	if (getenvp[0] == colon[0])
 	{
-		route = str_concatdot(dot, getenvp);
+		getenvp = malloc(sizeof(char) * 3);
+		getenvp = ".";
+		route = str_concat(getenvp, exname);
 		return (route);
 	}
 	if (getenvp && getenvp[0])
@@ -97,37 +100,6 @@ void handle_sigint(int i)
 	(void)i;
 	write(STDOUT_FILENO, "\n", 2);
 	write(STDOUT_FILENO, "Alej@ Super Shell$ ", 20);
-}
-
-/**
- * str_concatdot - concatenates string.
- * @s1: string 1.
- * @s2: string 2.
- * Return: void
- */
-
-char *str_concatdot(char *s1, char *s2)
-{
-	int i = 0, j = 0, k, l;
-	char *con;
-
-	if (s1 == NULL)
-		s1 = "";
-	if (s2 == NULL)
-		s2 = "";
-	while (s1[i] != '\0')
-		i++;
-	while (s2[j] != '\0')
-		j++;
-	con = malloc(sizeof(char) * (i + j + 1));
-	if (con == 0)
-		return (NULL);
-	for (k = 0; k < i; k++)
-		con[k] = s1[k];
-	for (l = 0; l < j; l++)
-		con[k++] = s2[l];
-	con[k] = '\0';
-	return (con);
 }
 
 /**

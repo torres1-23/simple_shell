@@ -10,7 +10,7 @@
 
 int built_in(char *str, char *buffer, int status1)
 {
-	int i = 0, j = 0;
+	int i = 0, j = 0, status = 0;
 	char *words[] = {"exit", "env", "setenv", "unsetenv", NULL};
 	char *space = " ";
 
@@ -31,13 +31,13 @@ int built_in(char *str, char *buffer, int status1)
 		}
 		else if (i == 2 && ((j == 7) || ((j == 6) && (str[j] == space[0]))))
 		{
-			argset(str);
-			return (0);
+			status = argset(str);
+			return (status);
 		}
 		else if (i == 3 && ((j == 9) || ((j == 8) && (str[j] == space[0]))))
 		{
-			argunset(str);
-			return (0);
+			status = argunset(str);
+			return (status);
 		}
 		if (i == 4)
 			return (1);

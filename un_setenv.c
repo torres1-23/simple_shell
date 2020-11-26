@@ -45,9 +45,10 @@ int _setenv(char *name, char *value, int overwrite)
 /**
  * argset - Set arguments for setenv function.
  * @str: pointer to command string.
+ * Return: status.
  */
 
-void argset(char *str)
+int argset(char *str)
 {
 	char **argset;
 	char *name = NULL, *value = NULL;
@@ -63,7 +64,7 @@ void argset(char *str)
 		while (argset[i])
 			free(argset[i++]);
 		free(argset);
-		return;
+		return (2);
 	}
 	else if (i == 2)
 		name = argset[1];
@@ -74,14 +75,15 @@ void argset(char *str)
 	}
 	else
 	{
-		write(STDERR_FILENO, "Too many arguments\n", 20);
-		return;
+		write(STDERR_FILENO, "Too many arguments\n", 19);
+		return (2);
 	}
 	_setenv(name, value, 1);
 	i = 0;
 	while (argset[i])
 		free(argset[i++]);
 	free(argset);
+	return (0);
 }
 
 /**
@@ -128,9 +130,10 @@ int _unsetenv(const char *name)
 /**
  * argunset - Set arguments for unsetenv function.
  * @str: pointer to command string.
+ * Return: status.
  */
 
-void argunset(char *str)
+int argunset(char *str)
 {
 	char **argset;
 	char *name = NULL;
@@ -141,19 +144,20 @@ void argunset(char *str)
 		i++;
 	if (i == 1)
 	{
-		write(STDERR_FILENO, "Too few arguments\n", 20);
-		return;
+		write(STDERR_FILENO, "Too few arguments\n", 19);
+		return (2);
 	}
 	else if (i == 2)
 		name = argset[1];
 	else
 	{
-		write(STDERR_FILENO, "Too many arguments\n", 20);
-		return;
+		write(STDERR_FILENO, "Too many arguments\n", 19);
+		return (2);
 	}
 	_unsetenv(name);
 	i = 0;
 	while (argset[i])
 		free(argset[i++]);
 	free(argset);
+	return (0);
 }

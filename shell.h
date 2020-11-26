@@ -25,14 +25,13 @@ int built_in(char *str, char *buffer, int status1);
 void _cenv(void);
 void free_stuff(char **args, char *b);
 int _setenv(char *name, char *value, int overwrite);
-void argset(char *str);
+int argset(char *str);
 char *concat(char *name, char *value, int index);
 int _unsetenv(const char *name);
-void argunset(char *str);
+int argunset(char *str);
 void handle_sigint(int i);
 void free_bidimensional(char **array);
 void p_int(int n);
-char *str_concatdot(char *s1, char *s2);
 void message_error(int code, char *exe, int cont, char *arg);
 void err_hd(int stat, char *path);
 
