@@ -32,7 +32,6 @@ int main(int argc __attribute__((unused)), char **argv)
 		buffer[numc - 1] = '\0';
 		comand = delspace(buffer, copy);
 		status = built_in(comand, buffer, status1);
-		status1 = status;
 		if (status == 1)
 		{
 			if (numc != 1 && comand[0])

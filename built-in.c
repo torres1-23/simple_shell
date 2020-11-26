@@ -32,12 +32,12 @@ int built_in(char *str, char *buffer, int status1)
 		else if (i == 2 && ((j == 7) || ((j == 6) && (str[j] == space[0]))))
 		{
 			status = argset(str);
-			return (status);
+			return (0);
 		}
 		else if (i == 3 && ((j == 9) || ((j == 8) && (str[j] == space[0]))))
 		{
 			status = argunset(str);
-			return (status);
+			return (0);
 		}
 		if (i == 4)
 			return (1);

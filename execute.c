@@ -22,9 +22,7 @@ int execute(char *exe, int cont, char **args, char *b)
 	{
 		if ((args[0][0] == '/' && args[0][1] != '/') ||
 		(args[0][0] == '.' && args[0][1] == '/'))
-		{
 			stat = execve(args[0], args, environ);
-		}
 		else
 		{
 			path = find_path(args[0]);
