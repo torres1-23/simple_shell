@@ -82,7 +82,7 @@ char *str_concat(char *s1, char *s2)
 		i++;
 	while (s2[j] != '\0')
 		j++;
-	con = malloc(sizeof(char) * (i + j + 5));
+	con = malloc(sizeof(char) * (i + j + 2));
 	if (con == 0)
 		return (NULL);
 	for (k = 0; k < i; k++)
@@ -129,14 +129,13 @@ char *concat(char *name, char *value, int index)
  * delspace - Function that deletes space before find a character
  * @str: string to remove the space
  * @copy: string without spaces.
- * @index: index to star to remove
  * Return: return a pointer to the new string starting with a caracter o null
  */
 
-char *delspace(char *str, char *copy, int index)
+char *delspace(char *str, char *copy)
 {
 	char *space = " ";
-	int i = index, j = 0;
+	int i = 0, j = 0;
 
 	if (!str)
 		return (NULL);

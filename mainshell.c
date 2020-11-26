@@ -30,8 +30,8 @@ int main(int argc __attribute__((unused)), char **argv)
 			break;
 		}
 		buffer[numc - 1] = '\0';
-		comand = delspace(buffer, copy, 0);
-		status = built_in(argv[0], cont, comand, buffer, status1, copy);
+		comand = delspace(buffer, copy);
+		status = built_in(comand, buffer, status1);
 		if (status == 1)
 		{
 			if (numc != 1 && comand[0])

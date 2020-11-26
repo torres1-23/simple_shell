@@ -74,7 +74,7 @@ void argset(char *str)
 	}
 	else
 	{
-		write(STDOUT_FILENO, "Too many arguments\n", 20);
+		write(STDERR_FILENO, "Too many arguments\n", 20);
 		return;
 	}
 	_setenv(name, value, 1);
@@ -141,14 +141,14 @@ void argunset(char *str)
 		i++;
 	if (i == 1)
 	{
-		write(STDOUT_FILENO, "Too few arguments\n", 20);
+		write(STDERR_FILENO, "Too few arguments\n", 20);
 		return;
 	}
 	else if (i == 2)
 		name = argset[1];
 	else
 	{
-		write(STDOUT_FILENO, "Too many arguments\n", 20);
+		write(STDERR_FILENO, "Too many arguments\n", 20);
 		return;
 	}
 	_unsetenv(name);
